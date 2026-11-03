@@ -38,16 +38,31 @@ export const MainTab: React.FC<MainTabProps> = ({
   return (
     <div className="main-view" style={{ '--reader-font-size': `${fontSize}px` } as React.CSSProperties}>
 
-      {/* Karta z wizerunkiem: Maryja na tronie */}
-      <div className="sacred-image-card">
+      {/* Karta z wizerunkiem: Maryja na tronie (kliknięcie otwiera Skarbiec Modlitw) */}
+      <div 
+        className="sacred-image-card clickable-sacred-card"
+        onClick={() => onOpenPrayers()}
+        role="button"
+        tabIndex={0}
+        title="Dotknij, aby przejść do zakładki Modlitwy"
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            onOpenPrayers();
+          }
+        }}
+      >
         <img
           src="/maryja-na-tronie.jpg"
-          alt="Maryja na tronie – Matka Miłosierdzia"
+          alt="Maryja na tronie"
           className="sacred-image-thumb"
         />
-        <div className="sacred-image-info">
+        <div className="sacred-image-info" style={{ flex: 1, minWidth: 0 }}>
           <h4>Matka Boża</h4>
           <p><em>«Wszystko z Maryją, przez Maryję i dla Maryi»</em></p>
+        </div>
+        <div className="sacred-image-arrow">
+          <ChevronRight size={18} />
         </div>
       </div>
 

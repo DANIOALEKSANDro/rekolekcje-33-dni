@@ -510,6 +510,35 @@ button {
   margin-bottom: 18px;
 }
 
+.sacred-image-card.clickable-sacred-card {
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.sacred-image-card.clickable-sacred-card:hover {
+  border-color: var(--border-gold);
+  background-color: var(--bg-card-subtle);
+  transform: translateY(-1px);
+}
+
+.sacred-image-card.clickable-sacred-card:active {
+  transform: scale(0.99);
+}
+
+.sacred-image-arrow {
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.sacred-image-card.clickable-sacred-card:hover .sacred-image-arrow {
+  color: var(--text-gold);
+  transform: translateX(2px);
+}
+
 .sacred-image-thumb {
   width: 48px;
   height: 60px;
