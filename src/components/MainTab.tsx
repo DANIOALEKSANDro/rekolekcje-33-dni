@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { ChevronLeft, ChevronRight, Check, Volume2, Square, BookOpen, BookmarkCheck, ArrowRight, Info } from 'lucide-react';
+import React from 'react';
+import { ChevronLeft, ChevronRight, Check, BookOpen, BookmarkCheck, ArrowRight, Info } from 'lucide-react';
 import { RetreatDay } from '../data/retreatData';
 
 interface MainTabProps {
@@ -19,52 +19,6 @@ export const MainTab: React.FC<MainTabProps> = ({
   fontSize,
   onOpenPrayers
 }) => {
-  const [isSpeaking, setIsSpeaking] = useState(false);
-
-  // Zatrzymanie lektora przy zmianie dnia lub opuszczeniu zakładki
-  useEffect(() => {
-    return () => {
-      if ('speechSynthesis' in window) {
-        window.speechSynthesis.cancel();
-      }
-    };
-  }, [currentDay.day]);
-
-  const toggleSpeech = () => {
-    if (!('speechSynthesis' in window)) {
-      alert('Twoja przeglądarka nie obsługuje czytania głosem.');
-      return;
-    }
-
-    if (isSpeaking) {
-      window.speechSynthesis.cancel();
-      setIsSpeaking(false);
-      return;
-    }
-
-    window.speechSynthesis.cancel();
-
-    // Przygotowanie tekstu do odczytania: nagłówek, ewangelia, rozważanie i pytania
-    const textToSpeak = `
-      ${currentDay.header}.
-      ${currentDay.patronage ? 'Wspomnienie: ' + currentDay.patronage + '.' : ''}
-      ${currentDay.title}.
-      Ewangelia: ${currentDay.gospelSig}.
-      ${currentDay.paragraphs.join(' ')}.
-      ${currentDay.questions.length > 0 ? 'Punkty do rachunku sumienia i modlitwy: ' + currentDay.questions.join('. ') : ''}
-    `;
-
-    const utterance = new SpeechSynthesisUtterance(textToSpeak);
-    utterance.lang = 'pl-PL';
-    utterance.rate = 0.88; // Spokojne tempo, komfortowe do modlitwy i dla seniorów
-
-    utterance.onend = () => setIsSpeaking(false);
-    utterance.onerror = () => setIsSpeaking(false);
-
-    window.speechSynthesis.speak(utterance);
-    setIsSpeaking(true);
-  };
-
   const isCompleted = completedDays.includes(currentDay.day);
   const isConsecrationDay = currentDay.day === 34;
 
@@ -143,16 +97,6 @@ export const MainTab: React.FC<MainTabProps> = ({
         <h2 className="reading-title" style={{ marginTop: currentDay.patronage ? '8px' : '16px' }}>
           {currentDay.title}
         </h2>
-
-        {/* Przycisk lektora audio (czytanie na głos) */}
-        <button 
-          className={`audio-player-btn ${isSpeaking ? 'active' : ''}`}
-          onClick={toggleSpeech}
-          aria-label={isSpeaking ? "Zatrzymaj czytanie" : "Czytaj na głos"}
-        >
-          {isSpeaking ? <Square size={16} /> : <Volume2 size={16} />}
-          <span>{isSpeaking ? 'Zatrzymaj czytanie' : 'Słuchaj (Czytaj na głos)'}</span>
-        </button>
 
         {/* Sygnatura Ewangelii */}
         {currentDay.gospelSig && (

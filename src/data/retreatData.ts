@@ -99,7 +99,7 @@ export const CONSECRATION_DAY_DATA: RetreatDay = {
   "title": "Dzień całkowitego oddania się Jezusowi przez ręce Maryi",
   "gospelSig": "Mt 18, 12-14",
   "paragraphs": [
-    "EWANGELIA (Mt 18, 12-14)\nJezus powiedział do swoich uczniów: „Jak wam się zdaje? Jeśli kto posiada sto owiec i zabłąka się jedna z nich: czy nie zostawi dziewięćdziesięciu dziewięciu na górach i nie pójdzie szukać tej, która się zabłąkała? A jeśli mu się uda ją odnaleźć, zaprawdę powiadam wam: cieszy się nią bardziej niż dziewięćdziesięciu dziewięciu tymi, które się nie zabłąkały. Tak też nie jest wolą Ojca waszego, który jest w niebie, żeby zginęło jedno z tych małych”.",
+    "EWANGELIA (Mt 18, 12-14) Jezus powiedział do swoich uczniów: „Jak wam się zdaje? Jeśli kto posiada sto owiec i zabłąka się jedna z nich: czy nie zostawi dziewięćdziesięciu dziewięciu na górach i nie pójdzie szukać tej, która się zabłąkała? A jeśli mu się uda ją odnaleźć, zaprawdę powiadam wam: cieszy się nią bardziej niż dziewięćdziesięciu dziewięciu tymi, które się nie zabłąkały. Tak też nie jest wolą Ojca waszego, który jest w niebie, żeby zginęło jedno z tych małych”.",
     "„Drzewo Życia należy starannie otoczyć mocnym żywopłotem, by nikt go nie uszkodził ani nie zniszczył. Oznacza to, że z całą troskliwością i czujnością należy strzec swego serca oraz wierności podjętym zobowiązaniom, żyjąc w całkowitym zawierzeniu i miłości ku Maryi.”",
     "Należy czuwać też, by Drzewa nie zniszczyły gąsienice. Te gąsienice to miłość własna i miłowanie wygód, które niszczą zielone liście i niweczą nadzieje na owocowanie. Nieuporządkowana miłość własna oraz miłość do Maryi w żaden bowiem sposób nie pozostają ze sobą w zgodzie.",
     "Nie można pozwalać na to, by do Drzewa zbliżyły się drapieżne zwierzęta. Tymi zwierzętami są grzechy, które samym swym dotknięciem już mogą zadać śmierć Drzewu Życia. Do Drzewa więc nie powinien docierać nawet ich oddech, to znaczy: grzechy powszednie, które zawsze są bardzo niebezpieczne, o ile nie podejmujemy wysiłku, by z nimi walczyć.",
@@ -161,7 +161,7 @@ export const RETREAT_DAYS: RetreatDay[] = [
     "gospelSig": "Łk 16, 1 -8",
     "questions": [
       "Czy mam świadomość, że stworzył mnie Bóg i że powinienem podziękować Mu za wszystkie cechy, dary i talenty?",
-      "Czy zdaję sobie sprawę z wielkości i piękna powołania do przyjaźni z Bogiem,\n\ndo której On mnie wzywa?",
+      "Czy zdaję sobie sprawę z wielkości i piękna powołania do przyjaźni z Bogiem, do której On mnie wzywa?",
       "Na ile i jak odpowiadam na Ojcowską miłość Boga i czy pokornie służę ludziom swoim życiem?",
       "Czy widzę w Jezusie i Maryi wzór dla realizacji mojego człowieczeństwa?"
     ],
@@ -199,7 +199,7 @@ export const RETREAT_DAYS: RetreatDay[] = [
     "questions": [
       "Czy jestem świadomy całego piękna istoty ludzkiej w Bogu?",
       "Jakie są złe skłonności, które szczególnie w sobie odczuwam?",
-      "Czy proszę o Boże błogosławieństwo dla mojego zranionego człowieczeństwa,\n\njak również dla innych ludzi?",
+      "Czy proszę o Boże błogosławieństwo dla mojego zranionego człowieczeństwa, jak również dla innych ludzi?",
       "Czy jestem świadomy wielkości i piękna duszy Maryi?"
     ],
     "prayersList": [
@@ -350,7 +350,7 @@ export const RETREAT_DAYS: RetreatDay[] = [
     "questions": [
       "Czy jestem świadomy ran wynikających z pożądań mojej duszy i dusz innych ludzi?",
       "Jak bardzo wpływa na mnie pożądliwość ciała i czy przyzywam Jezusa, aby mnie od tego uwolnił?",
-      "Czy przez ręce Maryi, z miłości do Jezusa, jestem gotów zaakceptować\n\numieranie dla siebie, abym mógł odpowiedzialnie i dojrzale kochać siebie i bliźniego w życiu?"
+      "Czy przez ręce Maryi, z miłości do Jezusa, jestem gotów zaakceptować umieranie dla siebie, abym mógł odpowiedzialnie i dojrzale kochać siebie i bliźniego w życiu?"
     ],
     "prayersList": [
       "1. O Stworzycielu Duchu przyjdź",
@@ -598,7 +598,7 @@ export const RETREAT_DAYS: RetreatDay[] = [
       "Jaka jest moja modlitwa?",
       "Czy jest wyrazem mojej wiary i miłości do Boga?",
       "Czy mam wystarczająco dużo czasu dla Boga?",
-      "Czy na modlitwie przedstawiam Bogu ludzi, których spotykam oraz potrzeby\n\nKościoła i świata? Czy to czynię przez ręce Maryi?"
+      "Czy na modlitwie przedstawiam Bogu ludzi, których spotykam oraz potrzeby Kościoła i świata? Czy to czynię przez ręce Maryi?"
     ],
     "prayersList": [
       "1. O Stworzycielu Duchu przyjdź",
@@ -1094,7 +1094,7 @@ export const RETREAT_DAYS: RetreatDay[] = [
     "title": "Maryja, Matka Jezusa Chrystusa, Syna Bożego",
     "gospelSig": "Łk 21, 12 -19",
     "questions": [
-      "Czy jestem wdzięczny Jezusowi Chrystusowi, Synowi Bożemu za to, że stał się\n\nczłowiekiem i Maryi za to, że zgodziła się być Jego Matką?",
+      "Czy jestem wdzięczny Jezusowi Chrystusowi, Synowi Bożemu za to, że stał się człowiekiem i Maryi za to, że zgodziła się być Jego Matką?",
       "Czy jestem otwarty na drogę wychowania i wzrastanie w wierze?",
       "Czy oddaję cześć Maryi, godnej Matki Bożej?"
     ],
@@ -1352,7 +1352,7 @@ export const RETREAT_DAYS: RetreatDay[] = [
     "title": "Synowska więź zaufania i oddanie się Maryi",
     "gospelSig": "Mt 24, 37 -44",
     "questions": [
-      "Czy podejmuję wiarę, jako osobistą relację i spotkanie w miłości z Jezusem i\n\nMaryją?",
+      "Czy podejmuję wiarę, jako osobistą relację i spotkanie w miłości z Jezusem i Maryją?",
       "Czy wytrwale i regularnie oddaję siebie Jezusowi Chrystusowi przez Maryję?",
       "Czy mam synowskie zaufanie do mojej niebiańskiej Matki?"
     ],
@@ -1678,9 +1678,9 @@ export const RETREAT_DAYS: RetreatDay[] = [
     "title": "Męka, śmierć i zmartwychwstanie, największy dowód i urzeczywistnienie zwycięstwa miłości Jezusa",
     "gospelSig": "Mt 15, 29 -37",
     "questions": [
-      "Czy jestem świadomy, że grzech był przyczyną cierpienia Chrystusa, i że każdy grzech nadal rani Kościół\n\n–\n\nCiało Jezusa?",
+      "Czy jestem świadomy, że grzech był przyczyną cierpienia Chrystusa, i że każdy grzech nadal rani Kościół – Ciało Jezusa?",
       "Czy rozpoznaję w tajemnicy Krzyża Chrystusa miłość Jezusa?",
-      "Czy wierzę, że Chrystus Zwycięzca chce mi okazać miłość, przebaczyć\n\nmoje grzechy i poprowadzić mnie droga prawdziwego szczęścia, aż do życia w wieczności?"
+      "Czy wierzę, że Chrystus Zwycięzca chce mi okazać miłość, przebaczyć moje grzechy i poprowadzić mnie droga prawdziwego szczęścia, aż do życia w wieczności?"
     ],
     "prayersList": [
       "1. Litania do Ducha Świętego",
@@ -1811,8 +1811,8 @@ export const RETREAT_DAYS: RetreatDay[] = [
     "gospelSig": "Mt 7, 21. 24 -27",
     "questions": [
       "Jaki jest mój osobisty stosunek do Eucharystii?",
-      "Czy odczuwam potrzebę uczestniczenia we Mszy Świętej i adoracji\n\nNajświętszego Sakramentu?",
-      "Czy jestem świadomy ogromu miłości Jezusa w Najświętszym Sakramencie\n\nOłtarza?"
+      "Czy odczuwam potrzebę uczestniczenia we Mszy Świętej i adoracji Najświętszego Sakramentu?",
+      "Czy jestem świadomy ogromu miłości Jezusa w Najświętszym Sakramencie Ołtarza?"
     ],
     "prayersList": [
       "1. Litania do Ducha Świętego",

@@ -355,7 +355,7 @@ button {
 
 /* Rozważanie (akapity) */
 .reflection-section {
-  margin-bottom: 24px;
+  margin-bottom: 18px;
 }
 
 .reflection-paragraph {
@@ -363,7 +363,7 @@ button {
   font-size: var(--reader-font-size);
   line-height: var(--reader-line-height);
   color: var(--text-main);
-  margin-bottom: 14px;
+  margin-bottom: 8px;
   text-align: justify;
 }
 
@@ -748,7 +748,7 @@ button {
   display: flex;
   align-items: flex-start;
   gap: 8px;
-  margin-bottom: 12px;
+  margin-bottom: 8px;
   font-family: var(--font-serif);
   font-size: var(--reader-font-size);
   line-height: var(--reader-line-height);

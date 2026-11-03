@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { ChevronDown, ChevronUp, Check, Volume2, Square, BookOpen } from 'lucide-react';
-import { ALL_PRAYERS_DATA, FullPrayerItem } from '../data/prayersData';
+import { ChevronDown, ChevronUp, Check, BookOpen } from 'lucide-react';
+import { ALL_PRAYERS_DATA } from '../data/prayersData';
 
 interface PrayersTabProps {
   fontSize: number;
@@ -14,37 +14,9 @@ export const PrayersTab: React.FC<PrayersTabProps> = ({
   onToggleCompletePrayer
 }) => {
   const [expandedId, setExpandedId] = useState<string | null>('akt-ofiarowania');
-  const [speakingId, setSpeakingId] = useState<string | null>(null);
 
   const toggleExpand = (id: string) => {
     setExpandedId(prev => prev === id ? null : id);
-  };
-
-  const toggleSpeech = (prayer: FullPrayerItem, e: React.MouseEvent) => {
-    e.stopPropagation();
-
-    if (!('speechSynthesis' in window)) {
-      alert('Twoja przeglądarka nie obsługuje czytania głosem.');
-      return;
-    }
-
-    if (speakingId === prayer.id) {
-      window.speechSynthesis.cancel();
-      setSpeakingId(null);
-      return;
-    }
-
-    window.speechSynthesis.cancel();
-
-    const utterance = new SpeechSynthesisUtterance(`${prayer.title}. ${prayer.text}`);
-    utterance.lang = 'pl-PL';
-    utterance.rate = 0.88;
-
-    utterance.onend = () => setSpeakingId(null);
-    utterance.onerror = () => setSpeakingId(null);
-
-    window.speechSynthesis.speak(utterance);
-    setSpeakingId(prayer.id);
   };
 
   return (
@@ -65,7 +37,6 @@ export const PrayersTab: React.FC<PrayersTabProps> = ({
         {ALL_PRAYERS_DATA.map((prayer) => {
           const isExpanded = expandedId === prayer.id;
           const isCompleted = completedPrayers.includes(prayer.id);
-          const isSpeaking = speakingId === prayer.id;
 
           return (
             <section 
@@ -89,15 +60,6 @@ export const PrayersTab: React.FC<PrayersTabProps> = ({
                 </div>
 
                 <div className="prayer-stage-right">
-                  <button
-                    className={`audio-mini-btn ${isSpeaking ? 'active' : ''}`}
-                    onClick={(e) => toggleSpeech(prayer, e)}
-                    title={isSpeaking ? "Zatrzymaj czytanie" : "Czytaj tę modlitwę na głos"}
-                    aria-label="Czytaj na głos"
-                  >
-                    {isSpeaking ? <Square size={14} /> : <Volume2 size={14} />}
-                  </button>
-
                   <button
                     className={`prayer-check-btn ${isCompleted ? 'completed' : ''}`}
                     onClick={(e) => {
