@@ -68,27 +68,27 @@ export const PrayersTab: React.FC<PrayersTabProps> = ({
           const isSpeaking = speakingId === prayer.id;
 
           return (
-            <article 
+            <section 
               key={prayer.id} 
-              className={`prayer-accordion-item ${isExpanded ? 'expanded' : ''} ${isCompleted ? 'completed' : ''}`}
+              className={`stage-block prayer-stage-block ${isExpanded ? 'expanded' : ''}`}
             >
               <div 
-                className="prayer-header" 
+                className="stage-header prayer-stage-header" 
                 onClick={() => toggleExpand(prayer.id)}
                 role="button"
                 tabIndex={0}
               >
-                <div className="prayer-header-left">
+                <div className="prayer-stage-left">
                   <div className={`prayer-check-circle ${isCompleted ? 'completed' : ''}`}>
-                    {isCompleted ? <Check size={14} strokeWidth={3} /> : <BookOpen size={14} />}
+                    {isCompleted ? <Check size={16} strokeWidth={3} /> : <BookOpen size={16} />}
                   </div>
                   <div>
-                    <h3 className="prayer-title-text">{prayer.title}</h3>
-                    <div className="prayer-author-text">{prayer.author}</div>
+                    <h3 className="stage-title prayer-stage-title">{prayer.title}</h3>
+                    <div className="stage-subtitle prayer-stage-author">{prayer.author}</div>
                   </div>
                 </div>
 
-                <div className="prayer-header-right">
+                <div className="prayer-stage-right">
                   <button
                     className={`audio-mini-btn ${isSpeaking ? 'active' : ''}`}
                     onClick={(e) => toggleSpeech(prayer, e)}
@@ -110,9 +110,9 @@ export const PrayersTab: React.FC<PrayersTabProps> = ({
                     <Check size={16} strokeWidth={isCompleted ? 3 : 2} />
                   </button>
 
-                  <div className="expand-indicator">
+                  <button className="top-btn" style={{ padding: '0 8px', height: '34px' }} aria-label={isExpanded ? "Zwiń modlitwę" : "Rozwiń modlitwę"}>
                     {isExpanded ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
-                  </div>
+                  </button>
                 </div>
               </div>
 
@@ -120,7 +120,7 @@ export const PrayersTab: React.FC<PrayersTabProps> = ({
                 <div className="prayer-content-wrap">
                   <div className="prayer-full-text">
                     {prayer.text.split('\n\n').map((paragraph, pIdx) => (
-                      <p key={pIdx} style={{ marginBottom: '12px', whiteSpace: 'pre-line' }}>
+                      <p key={pIdx} style={{ marginBottom: '14px', whiteSpace: 'pre-line' }}>
                         {paragraph}
                       </p>
                     ))}
@@ -137,7 +137,7 @@ export const PrayersTab: React.FC<PrayersTabProps> = ({
                   </div>
                 </div>
               )}
-            </article>
+            </section>
           );
         })}
       </div>

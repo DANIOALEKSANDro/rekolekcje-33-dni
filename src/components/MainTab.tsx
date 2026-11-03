@@ -92,7 +92,7 @@ export const MainTab: React.FC<MainTabProps> = ({
         />
         <div className="sacred-image-info">
           <h4>Matka Boża Miłosierdzia</h4>
-          <p>Ostra Brama w Wilnie • <em>«Wszystko z Maryją, przez Maryją i dla Maryi»</em></p>
+          <p>Ostra Brama w Wilnie • <em>«Wszystko z Maryją, przez Maryję i dla Maryi»</em></p>
         </div>
       </div>
 

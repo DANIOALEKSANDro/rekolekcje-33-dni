@@ -76,7 +76,7 @@ export const CalendarTab: React.FC<CalendarTabProps> = ({
               </p>
             ))}
             {WSTEP_DATA.footnote && (
-              <div className="footnote-box" style={{ marginTop: '16px', paddingTop: '10px', borderTop: '1px dashed var(--border-card)', fontSize: '0.8rem', color: 'var(--text-muted)' }}>
+              <div className="footnote-box" style={{ marginTop: '16px', paddingTop: '10px', borderTop: '1px dashed var(--border-card)', fontSize: 'calc(var(--reader-font-size) * 0.78)', color: 'var(--text-muted)' }}>
                 {WSTEP_DATA.footnote}
               </div>
             )}
@@ -104,7 +104,7 @@ export const CalendarTab: React.FC<CalendarTabProps> = ({
                 </button>
               </div>
 
-              <div style={{ marginTop: '6px', fontSize: '0.84rem', color: 'var(--text-gold)', fontWeight: 600 }}>
+              <div className="stage-intencja-text">
                 Intencja: {stage.intencja}
               </div>
             </div>
@@ -112,21 +112,21 @@ export const CalendarTab: React.FC<CalendarTabProps> = ({
             {/* Rozszerzone wytyczne etapu z PDF i przypisami */}
             {isExpanded && (
               <div style={{ padding: '14px 16px', backgroundColor: 'var(--bg-card-subtle)', borderTop: '1px solid var(--border-card)', borderBottom: '1px solid var(--border-card)' }}>
-                <div style={{ fontWeight: 600, fontSize: '0.86rem', marginBottom: '8px', color: 'var(--text-gold)' }}>
+                <div style={{ fontWeight: 600, fontSize: 'calc(var(--reader-font-size) * 0.86)', marginBottom: '8px', color: 'var(--text-gold)' }}>
                   Wskazania św. Ludwika Marii de Montfort dla tego etapu:
                 </div>
                 {stage.description.map((p, idx) => (
-                  <p key={idx} style={{ fontSize: '0.86rem', lineHeight: 1.5, marginBottom: '8px', color: 'var(--text-main)' }}>
+                  <p key={idx} style={{ fontSize: 'calc(var(--reader-font-size) * 0.9)', lineHeight: 1.6, marginBottom: '10px', color: 'var(--text-main)', fontFamily: 'var(--font-serif)' }}>
                     {p}
                   </p>
                 ))}
                 {stage.footnote && (
-                  <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)', fontStyle: 'italic', marginTop: '6px' }}>
+                  <div style={{ fontSize: 'calc(var(--reader-font-size) * 0.78)', color: 'var(--text-muted)', fontStyle: 'italic', marginTop: '6px' }}>
                     {stage.footnote}
                   </div>
                 )}
                 {stage.additionalReading && (
-                  <div style={{ marginTop: '10px', padding: '8px 12px', borderRadius: '4px', backgroundColor: 'var(--bg-primary)', border: '1px solid var(--border-card)', fontSize: '0.82rem', color: 'var(--text-main)' }}>
+                  <div style={{ marginTop: '10px', padding: '10px 14px', borderRadius: '4px', backgroundColor: 'var(--bg-primary)', border: '1px solid var(--border-card)', fontSize: 'calc(var(--reader-font-size) * 0.84)', color: 'var(--text-main)' }}>
                     📖 <strong>Lektura duchowa:</strong> {stage.additionalReading}
                   </div>
                 )}
