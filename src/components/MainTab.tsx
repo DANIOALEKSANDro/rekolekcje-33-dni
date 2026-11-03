@@ -36,28 +36,28 @@ export const MainTab: React.FC<MainTabProps> = ({
 
   return (
     <div className="main-view" style={{ '--reader-font-size': `${fontSize}px` } as React.CSSProperties}>
-      
+
       {/* Karta z wizerunkiem Matki Bożej Ostrobramskiej */}
       <div className="sacred-image-card">
-        <img 
-          src="/1.jpg" 
-          alt="Matka Boża Ostrobramska – Matka Miłosierdzia" 
-          className="sacred-image-thumb" 
+        <img
+          src="/1.jpg"
+          alt="Matka Boża Ostrobramska – Matka Miłosierdzia"
+          className="sacred-image-thumb"
         />
         <div className="sacred-image-info">
           <h4>Matka Boża Miłosierdzia</h4>
-          <p>Ostra Brama w Wilnie • <em>«Wszystko z Maryją, przez Maryję i dla Maryi»</em></p>
+          <p><em>«Wszystko z Maryją, przez Maryję i dla Maryi»</em></p>
         </div>
       </div>
 
       {/* Główna strona modlitewnika na dzisiejszy dzień */}
       <article className="prayer-book-page">
-        
+
         {/* Pasek nawigacji między dniami */}
         <div className="day-stepper-bar">
-          <button 
-            className="step-btn" 
-            onClick={handlePrev} 
+          <button
+            className="step-btn"
+            onClick={handlePrev}
             disabled={currentDay.day <= 1}
             aria-label="Poprzedni dzień"
           >
@@ -74,9 +74,9 @@ export const MainTab: React.FC<MainTabProps> = ({
             </div>
           </div>
 
-          <button 
-            className="step-btn" 
-            onClick={handleNext} 
+          <button
+            className="step-btn"
+            onClick={handleNext}
             disabled={currentDay.day >= 34}
             aria-label="Następny dzień"
           >
@@ -152,7 +152,7 @@ export const MainTab: React.FC<MainTabProps> = ({
               ))}
             </ul>
             <div style={{ marginTop: '14px', textAlign: 'center' }}>
-              <button 
+              <button
                 className="secondary-outline-btn"
                 onClick={onOpenPrayers}
               >
@@ -165,7 +165,7 @@ export const MainTab: React.FC<MainTabProps> = ({
 
         {/* Przycisk oznaczania dnia jako odmówiony (zapis w cache/localStorage) */}
         <div className="mark-done-container">
-          <button 
+          <button
             className={`mark-done-btn ${isCompleted ? 'completed' : ''}`}
             onClick={() => onToggleCompleteDay(currentDay.day)}
           >
@@ -175,8 +175,8 @@ export const MainTab: React.FC<MainTabProps> = ({
             </span>
           </button>
           <div className="mark-done-hint">
-            {isCompleted 
-              ? 'Ten dzień został zapisany w Twojej pamięci telefonu.' 
+            {isCompleted
+              ? 'Ten dzień został zapisany w Twojej pamięci telefonu.'
               : 'Po zakończeniu rozważania i modlitw dotknij przycisk, aby zachować postęp.'}
           </div>
         </div>
