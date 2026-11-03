@@ -70,13 +70,16 @@ export const CalendarTab: React.FC<CalendarTabProps> = ({
 
         {expandedSection === 'wstep' && (
           <div style={{ padding: '16px', borderTop: '1px solid var(--border-card)' }}>
-            <blockquote className="scripture-text" style={{ fontStyle: 'italic', marginBottom: '16px' }}>
-              «{WSTEP_DATA.motto}»
+            <blockquote className="motto-card">
+              «Wezwanie <strong>„Królowa Serc”</strong>, tak drogie Montfortowi, wyraźnie ukazuje dobrowolny charakter, wolność będącą owocem miłości, w relacji, jaka powstaje pomiędzy Maryją, a osobą poświęcającą się Jej Synowi za Jej pośrednictwem.»
             </blockquote>
             {WSTEP_DATA.paragraphs.map((p, idx) => (
-              <p key={idx} className="reflection-paragraph" style={{ marginBottom: '12px' }}>
-                {p}
-              </p>
+              <p 
+                key={idx} 
+                className="reflection-paragraph" 
+                style={{ marginBottom: '12px' }}
+                dangerouslySetInnerHTML={{ __html: p }}
+              />
             ))}
             {WSTEP_DATA.footnote && (
               <div className="footnote-box" style={{ marginTop: '16px', paddingTop: '10px', borderTop: '1px dashed var(--border-card)', fontSize: 'calc(var(--reader-font-size) * 0.78)', color: 'var(--text-muted)' }}>
@@ -119,9 +122,11 @@ export const CalendarTab: React.FC<CalendarTabProps> = ({
                   Wskazania św. Ludwika Marii de Montfort dla tego etapu:
                 </div>
                 {stage.description.map((p, idx) => (
-                  <p key={idx} style={{ fontSize: 'calc(var(--reader-font-size) * 0.9)', lineHeight: 1.6, marginBottom: '10px', color: 'var(--text-main)', fontFamily: 'var(--font-serif)' }}>
-                    {p}
-                  </p>
+                  <p 
+                    key={idx} 
+                    style={{ fontSize: 'calc(var(--reader-font-size) * 0.9)', lineHeight: 1.65, marginBottom: '10px', color: 'var(--text-main)', fontFamily: 'var(--font-serif)' }}
+                    dangerouslySetInnerHTML={{ __html: p }}
+                  />
                 ))}
                 {stage.footnote && (
                   <div style={{ fontSize: 'calc(var(--reader-font-size) * 0.78)', color: 'var(--text-muted)', fontStyle: 'italic', marginTop: '6px' }}>

@@ -4,7 +4,7 @@
    =================================================================== */
 
 :root {
-  --font-serif: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --font-serif: 'Source Serif 4', 'Merriweather', Georgia, 'Times New Roman', serif;
   --font-heading: 'Cinzel', Georgia, serif;
   --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
 
@@ -247,40 +247,56 @@ button {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-bottom: 14px;
+  gap: 4px;
+  padding-bottom: 12px;
   margin-bottom: 16px;
   border-bottom: 1px solid var(--border-card);
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .day-badge-wrap {
   text-align: center;
+  flex: 1;
+  min-width: 0;
+  padding: 0 4px;
 }
 
 .day-badge-title {
   font-family: var(--font-heading);
-  font-size: 1.15rem;
+  font-size: clamp(0.92rem, 3.8vw, 1.15rem);
   font-weight: 700;
   color: var(--text-gold);
-  letter-spacing: 0.5px;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.2;
 }
 
 .day-badge-date {
-  font-size: 0.8rem;
+  font-size: clamp(0.72rem, 2.8vw, 0.8rem);
   color: var(--text-muted);
   margin-top: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .step-btn {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 4px;
-  padding: 7px 12px;
+  padding: 6px 10px;
   border-radius: 6px;
   border: 1px solid var(--border-card);
   background-color: var(--bg-card-subtle);
   color: var(--text-main);
-  font-size: 0.84rem;
+  font-size: 0.82rem;
   font-weight: 600;
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 
 .step-btn:disabled {
@@ -302,30 +318,29 @@ button {
   font-family: var(--font-serif);
   font-size: 1.45rem;
   font-weight: 700;
-  line-height: 1.3;
+  line-height: 1.35;
   color: var(--text-main);
   margin-bottom: 16px;
 }
 
-/* Narzędzie audio (Czytaj na głos) */
-.audio-player-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 14px;
-  border-radius: 6px;
-  background-color: var(--bg-card-subtle);
-  border: 1px solid var(--border-card);
+/* Karta motta (np. cytat o Królowej Serc we Wstępie) - czytelna, estetyczna, bez sztucznych ozdobników */
+.motto-card {
+  font-family: var(--font-serif);
+  font-style: normal;
+  font-size: calc(var(--reader-font-size) * 0.95);
+  font-weight: 500;
+  line-height: 1.65;
   color: var(--text-main);
-  font-size: 0.86rem;
-  font-weight: 600;
-  margin-bottom: 20px;
+  background-color: var(--bg-card-subtle);
+  border-left: 3px solid var(--border-gold);
+  border-radius: 0 6px 6px 0;
+  padding: 14px 16px;
+  margin: 0 0 16px 0;
 }
 
-.audio-player-btn.active {
-  background-color: var(--text-red);
-  color: #ffffff;
-  border-color: var(--text-red);
+.motto-card strong {
+  color: var(--text-gold);
+  font-weight: 700;
 }
 
 /* Fragment Pisma Świętego */
@@ -334,12 +349,12 @@ button {
   border-left: 3px solid var(--border-gold);
   padding: 14px 16px;
   border-radius: 0 6px 6px 0;
-  margin-bottom: 22px;
+  margin-bottom: 20px;
 }
 
 .scripture-ref {
   font-family: var(--font-heading);
-  font-size: 0.82rem;
+  font-size: 0.85rem;
   font-weight: 700;
   color: var(--text-gold);
   margin-bottom: 6px;
@@ -348,14 +363,15 @@ button {
 .scripture-text {
   font-family: var(--font-serif);
   font-style: italic;
-  font-size: calc(var(--reader-font-size) * 0.95);
-  line-height: 1.6;
+  font-size: calc(var(--reader-font-size) * 0.96);
+  line-height: var(--reader-line-height);
   color: var(--text-main);
+  margin: 0;
 }
 
 /* Rozważanie (akapity) */
 .reflection-section {
-  margin-bottom: 18px;
+  margin-bottom: 20px;
 }
 
 .reflection-paragraph {
@@ -363,19 +379,31 @@ button {
   font-size: var(--reader-font-size);
   line-height: var(--reader-line-height);
   color: var(--text-main);
-  margin-bottom: 8px;
+  margin-bottom: 14px;
   text-align: justify;
+  text-justify: inter-word;
+  word-break: normal;
+  overflow-wrap: break-word;
 }
 
-.reflection-paragraph:first-of-type::first-letter {
-  font-family: var(--font-heading);
-  font-size: 2.2em;
-  float: left;
-  line-height: 0.8;
-  padding-right: 8px;
-  padding-top: 4px;
-  color: var(--text-gold);
+.reflection-paragraph:last-child {
+  margin-bottom: 0;
+}
+
+.reflection-paragraph strong,
+.reflection-paragraph b {
   font-weight: 700;
+  color: var(--text-main);
+}
+
+.reflection-paragraph em,
+.reflection-paragraph i {
+  font-style: italic;
+}
+
+/* Reset inicjału - czysty tekst od początku */
+.reflection-paragraph:first-of-type::first-letter {
+  all: unset;
 }
 
 /* Modlitwa dnia i Akt strzelisty */
@@ -1025,4 +1053,28 @@ button {
   align-items: center;
   justify-content: center;
   gap: 6px;
+}
+
+/* Responsywność dla ekranów mobilnych i małych wyświetlaczy */
+@media (max-width: 480px) {
+  .main-view {
+    padding: 12px 10px 84px 10px;
+  }
+  .prayer-book-page {
+    padding: 18px 12px;
+  }
+  .step-btn {
+    padding: 6px 8px;
+    font-size: 0.78rem;
+    gap: 3px;
+  }
+}
+
+@media (max-width: 370px) {
+  .step-btn-text {
+    display: none;
+  }
+  .step-btn {
+    padding: 6px 6px;
+  }
 }

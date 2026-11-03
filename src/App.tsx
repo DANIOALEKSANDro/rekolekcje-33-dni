@@ -49,12 +49,10 @@ export const App: React.FC = () => {
     }
   });
 
-  // Calculate current active day based on today's calendar date OR saved preference
+  // Sprawdź datę urządzenia: w okresie rekolekcji (5 XI – 8 XII)
+  // aplikacja automatycznie wyświetla dzień rekolekcji odpowiadający dzisiejszej dacie
   const [currentActiveDayNum, setCurrentActiveDayNum] = useState<number>(() => {
     try {
-      const saved = localStorage.getItem('rekolekcje_active_day');
-      if (saved) return Number(saved);
-
       const now = new Date();
       const currentYear = now.getFullYear();
       const startDate = new Date(currentYear, 10, 5, 0, 0, 0); // 5 listopada
@@ -64,8 +62,12 @@ export const App: React.FC = () => {
       if (now >= startDate && now <= consecrationDate) {
         const diffTime = now.getTime() - startDate.getTime();
         const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24)) + 1;
-        return Math.min(diffDays, 34);
+        return Math.min(Math.max(diffDays, 1), 34);
       }
+
+      // Poza okresem 5 XI - 8 XII przywróć zapisany dzień użytkownika lub domyślnie 1
+      const saved = localStorage.getItem('rekolekcje_active_day');
+      if (saved) return Number(saved);
 
       return 1; // Domyślnie Dzień 1
     } catch {

@@ -165,6 +165,33 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
             </option>
           </select>
         </div>
+
+        <button
+          className="top-btn"
+          style={{ width: '100%', marginTop: '8px', fontSize: '0.84rem', height: 'auto', padding: '10px 12px' }}
+          onClick={() => {
+            const now = new Date();
+            const year = now.getFullYear();
+            const start = new Date(year, 10, 5, 0, 0, 0);
+            const end = new Date(year, 11, 8, 23, 59, 59);
+            if (now >= start && now <= end) {
+              const diffTime = now.getTime() - start.getTime();
+              const day = Math.floor(diffTime / (1000 * 60 * 60 * 24)) + 1;
+              const clamped = Math.min(Math.max(day, 1), 34);
+              setCurrentActiveDayNum(clamped);
+              alert(`Ustawiono Dzień ${clamped} według dzisiejszej daty urządzenia.`);
+            } else if (now.getMonth() === 10 && now.getDate() < 5) {
+              const left = 5 - now.getDate();
+              setCurrentActiveDayNum(1);
+              alert(`Rekolekcje ruszają 5 listopada (za ${left} ${left === 1 ? 'dzień' : 'dni'}). Ustawiono Dzień 1 do przygotowania.`);
+            } else {
+              setCurrentActiveDayNum(1);
+              alert('Poza oknem 5 XI – 8 XII. Ustawiono Dzień 1.');
+            }
+          }}
+        >
+          📅 Ustaw automatycznie według daty urządzenia (5 XI – 8 XII)
+        </button>
       </section>
 
       {/* 4. Pamięć i postępy (Cache storage) */}
