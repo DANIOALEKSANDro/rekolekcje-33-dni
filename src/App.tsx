@@ -115,6 +115,14 @@ export const App: React.FC = () => {
     }
   }, [currentActiveDayNum]);
 
+  // Przełączanie aktywnej zakładki ze zresetowaniem pozycji przewijania do samej góry
+  const handleTabChange = (tab: 'today' | 'calendar' | 'prayers' | 'settings') => {
+    setActiveTab(tab);
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+  };
+
   // Toggle completed status for a day
   const toggleCompleteDay = (day: number) => {
     setCompletedDays(prev => 
@@ -132,8 +140,7 @@ export const App: React.FC = () => {
   // Select day and navigate to Today reading
   const handleSelectDay = (dayNum: number) => {
     setCurrentActiveDayNum(dayNum);
-    setActiveTab('today');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    handleTabChange('today');
   };
 
   // Resolve current day object
@@ -146,7 +153,7 @@ export const App: React.FC = () => {
       
       {/* Pasek górny (Nagłówek) */}
       <header className="top-nav">
-        <div className="brand-wrapper" onClick={() => setActiveTab('today')}>
+        <div className="brand-wrapper" onClick={() => handleTabChange('today')}>
           <img 
             src="/1.jpg" 
             alt="Matka Boża Ostrobramska" 
@@ -197,7 +204,7 @@ export const App: React.FC = () => {
             completedDays={completedDays}
             onToggleCompleteDay={toggleCompleteDay}
             fontSize={fontSize}
-            onOpenPrayers={() => setActiveTab('prayers')}
+            onOpenPrayers={() => handleTabChange('prayers')}
           />
         )}
 
@@ -240,7 +247,7 @@ export const App: React.FC = () => {
         <div className="tab-nav-list">
           <button
             className={`tab-btn ${activeTab === 'today' ? 'active' : ''}`}
-            onClick={() => setActiveTab('today')}
+            onClick={() => handleTabChange('today')}
           >
             <BookOpen size={20} />
             <span>Dziś</span>
@@ -248,7 +255,7 @@ export const App: React.FC = () => {
 
           <button
             className={`tab-btn ${activeTab === 'calendar' ? 'active' : ''}`}
-            onClick={() => setActiveTab('calendar')}
+            onClick={() => handleTabChange('calendar')}
           >
             <Calendar size={20} />
             <span>33 Dni</span>
@@ -256,7 +263,7 @@ export const App: React.FC = () => {
 
           <button
             className={`tab-btn ${activeTab === 'prayers' ? 'active' : ''}`}
-            onClick={() => setActiveTab('prayers')}
+            onClick={() => handleTabChange('prayers')}
           >
             <Heart size={20} />
             <span>Modlitwy</span>
@@ -264,7 +271,7 @@ export const App: React.FC = () => {
 
           <button
             className={`tab-btn ${activeTab === 'settings' ? 'active' : ''}`}
-            onClick={() => setActiveTab('settings')}
+            onClick={() => handleTabChange('settings')}
           >
             <Settings size={20} />
             <span>Ustawienia</span>
