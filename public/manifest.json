@@ -1,0 +1,16 @@
+{
+  "short_name": "33 dni z Maryją",
+  "name": "33 dni z Maryją – Przygotowanie do Ofiarowania",
+  "icons": [
+    {
+      "src": "/1.jpg",
+      "type": "image/jpeg",
+      "sizes": "192x192 512x512"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#0d1424",
+  "theme_color": "#121b2d",
+  "display": "standalone",
+  "orientation": "portrait"
+}

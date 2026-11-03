@@ -1,0 +1,1016 @@
+/* ===================================================================
+   33 DNI Z MARYJĄ – STYLIZACJA MODLITEWNIKA TRADYCYJNEGO
+   Spokojny, dostojny, czytelny dla seniorów, bez sztucznych efektów AI
+   =================================================================== */
+
+:root {
+  --font-serif: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --font-heading: 'Cinzel', Georgia, serif;
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+
+  /* Motyw: Ciepły pergamin (Domyślny - jak klasyczny modlitewnik papierowy) */
+  --bg-app: #f7f4ed;
+  --bg-card: #ffffff;
+  --bg-card-subtle: #f0ebe0;
+  --bg-input: #e8e2d4;
+  --border-card: #dcd4c3;
+  --border-gold: #bfa15f;
+  
+  --text-main: #24211e;
+  --text-muted: #5e5953;
+  --text-gold: #8c6a23;
+  --text-red: #8b1e1e;
+
+  --color-primary: #8c6a23;
+  --color-primary-bg: rgba(140, 106, 35, 0.08);
+  --color-success: #1f7a4d;
+  --color-success-bg: rgba(31, 122, 77, 0.1);
+
+  --reader-font-size: 20px;
+  --reader-line-height: 1.7;
+
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* Motyw: Spokojny ciemny (do modlitwy wieczornej) */
+[data-theme="dark"] {
+  --bg-app: #121620;
+  --bg-card: #182030;
+  --bg-card-subtle: #1e283c;
+  --bg-input: #232f46;
+  --border-card: #283650;
+  --border-gold: #a68538;
+
+  --text-main: #f0ede6;
+  --text-muted: #a6b2c4;
+  --text-gold: #d8b868;
+  --text-red: #d96d6d;
+
+  --color-primary: #d8b868;
+  --color-primary-bg: rgba(216, 184, 104, 0.12);
+  --color-success: #2ec477;
+  --color-success-bg: rgba(46, 196, 119, 0.15);
+}
+
+/* Motyw: Wysoki kontrast (dla osób słabowidzących i seniorów) */
+[data-theme="high-contrast"] {
+  --bg-app: #ffffff;
+  --bg-card: #ffffff;
+  --bg-card-subtle: #f2f2f2;
+  --bg-input: #e0e0e0;
+  --border-card: #000000;
+  --border-gold: #000000;
+
+  --text-main: #000000;
+  --text-muted: #1a1a1a;
+  --text-gold: #000000;
+  --text-red: #8b0000;
+
+  --color-primary: #000000;
+  --color-primary-bg: #eeeeee;
+  --color-success: #005a2b;
+  --color-success-bg: #dcfce7;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  background-color: var(--bg-app);
+  color: var(--text-main);
+  font-family: var(--font-sans);
+  line-height: 1.5;
+  min-height: 100%;
+  overflow-x: hidden;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+button {
+  font-family: inherit;
+  border: none;
+  background: none;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+/* Główny kontener aplikacji */
+.app-container {
+  max-width: 680px;
+  margin: 0 auto;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-app);
+  position: relative;
+}
+
+/* ===================================================================
+   NAGŁÓWEK APLIKACJI
+   =================================================================== */
+.top-nav {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background-color: var(--bg-card);
+  border-bottom: 1px solid var(--border-card);
+  padding: calc(var(--safe-top) + 8px) 16px 8px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brand-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+}
+
+.brand-portrait {
+  width: 40px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: 4px;
+  border: 1px solid var(--border-gold);
+}
+
+.brand-title {
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: var(--text-main);
+  line-height: 1.2;
+}
+
+.brand-subtitle {
+  font-size: 0.76rem;
+  color: var(--text-muted);
+}
+
+.top-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.top-btn {
+  height: 38px;
+  padding: 0 10px;
+  border-radius: 6px;
+  border: 1px solid var(--border-card);
+  background-color: var(--bg-card-subtle);
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 0.85rem;
+  transition: background-color 0.15s ease;
+}
+
+.top-btn:active {
+  background-color: var(--bg-input);
+}
+
+/* ===================================================================
+   DOLNY PASEK ZAKŁADEK (NAWIGACJA)
+   =================================================================== */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  background-color: var(--bg-card);
+  border-top: 1px solid var(--border-card);
+  padding: 6px 12px calc(var(--safe-bottom) + 6px) 12px;
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+.tab-nav-list {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.tab-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 6px 14px;
+  border-radius: 8px;
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  font-weight: 600;
+  transition: all 0.15s ease;
+  min-width: 68px;
+}
+
+.tab-btn.active {
+  color: var(--text-main);
+  background-color: var(--color-primary-bg);
+  font-weight: 700;
+}
+
+[data-theme="high-contrast"] .tab-btn.active {
+  background-color: #000000;
+  color: #ffffff;
+}
+
+/* ===================================================================
+   WIDOK GŁÓWNY (MAIN VIEW)
+   =================================================================== */
+.main-view {
+  flex: 1;
+  padding: 16px 16px 90px 16px;
+}
+
+/* Karta z czytaniem (jak strona w modlitewniku) */
+.prayer-book-page {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-card);
+  border-radius: 8px;
+  padding: 24px 20px;
+  margin-bottom: 20px;
+}
+
+/* Nawigator dni (Poprzedni / Następny) */
+.day-stepper-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 14px;
+  margin-bottom: 16px;
+  border-bottom: 1px solid var(--border-card);
+}
+
+.day-badge-wrap {
+  text-align: center;
+}
+
+.day-badge-title {
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-gold);
+  letter-spacing: 0.5px;
+}
+
+.day-badge-date {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.step-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 7px 12px;
+  border-radius: 6px;
+  border: 1px solid var(--border-card);
+  background-color: var(--bg-card-subtle);
+  color: var(--text-main);
+  font-size: 0.84rem;
+  font-weight: 600;
+}
+
+.step-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+/* Tytuł i temat rozważania */
+.reading-theme {
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-gold);
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.reading-title {
+  font-family: var(--font-serif);
+  font-size: 1.45rem;
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--text-main);
+  margin-bottom: 16px;
+}
+
+/* Narzędzie audio (Czytaj na głos) */
+.audio-player-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: 6px;
+  background-color: var(--bg-card-subtle);
+  border: 1px solid var(--border-card);
+  color: var(--text-main);
+  font-size: 0.86rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.audio-player-btn.active {
+  background-color: var(--text-red);
+  color: #ffffff;
+  border-color: var(--text-red);
+}
+
+/* Fragment Pisma Świętego */
+.scripture-box {
+  background-color: var(--bg-card-subtle);
+  border-left: 3px solid var(--border-gold);
+  padding: 14px 16px;
+  border-radius: 0 6px 6px 0;
+  margin-bottom: 22px;
+}
+
+.scripture-ref {
+  font-family: var(--font-heading);
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--text-gold);
+  margin-bottom: 6px;
+}
+
+.scripture-text {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: calc(var(--reader-font-size) * 0.95);
+  line-height: 1.6;
+  color: var(--text-main);
+}
+
+/* Rozważanie (akapity) */
+.reflection-section {
+  margin-bottom: 24px;
+}
+
+.reflection-paragraph {
+  font-family: var(--font-serif);
+  font-size: var(--reader-font-size);
+  line-height: var(--reader-line-height);
+  color: var(--text-main);
+  margin-bottom: 14px;
+  text-align: justify;
+}
+
+.reflection-paragraph:first-of-type::first-letter {
+  font-family: var(--font-heading);
+  font-size: 2.2em;
+  float: left;
+  line-height: 0.8;
+  padding-right: 8px;
+  padding-top: 4px;
+  color: var(--text-gold);
+  font-weight: 700;
+}
+
+/* Modlitwa dnia i Akt strzelisty */
+.prayer-day-box {
+  border-top: 1px solid var(--border-card);
+  padding-top: 18px;
+  margin-top: 18px;
+}
+
+.prayer-label {
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-gold);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.prayer-body-text {
+  font-family: var(--font-serif);
+  font-size: var(--reader-font-size);
+  line-height: var(--reader-line-height);
+  color: var(--text-main);
+  white-space: pre-line;
+  margin-bottom: 16px;
+}
+
+.aspiration-box {
+  background-color: var(--color-primary-bg);
+  border: 1px solid var(--border-card);
+  border-radius: 6px;
+  padding: 12px 16px;
+  margin-top: 12px;
+}
+
+.aspiration-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--text-gold);
+  margin-bottom: 4px;
+}
+
+.aspiration-text {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: calc(var(--reader-font-size) * 0.95);
+  color: var(--text-main);
+  line-height: 1.5;
+}
+
+/* ===================================================================
+   PRZYCISK OZNACZANIA JAKO ODMÓWIONE (ZAPIS W PAMIĘCI)
+   =================================================================== */
+.mark-done-container {
+  margin-top: 24px;
+  padding-top: 18px;
+  border-top: 1px solid var(--border-card);
+}
+
+.mark-done-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 14px 18px;
+  border-radius: 8px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  border: 1.5px solid var(--border-card);
+  background-color: var(--bg-card-subtle);
+  color: var(--text-main);
+  transition: all 0.2s ease;
+}
+
+.mark-done-btn.completed {
+  background-color: var(--color-success);
+  color: #ffffff;
+  border-color: var(--color-success);
+}
+
+.mark-done-hint {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  text-align: center;
+  margin-top: 8px;
+}
+
+/* ===================================================================
+   WIZERUNEK I DEDYKACJA
+   =================================================================== */
+.sacred-image-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-card);
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-bottom: 18px;
+}
+
+.sacred-image-thumb {
+  width: 48px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 4px;
+  border: 1px solid var(--border-gold);
+}
+
+.sacred-image-info h4 {
+  font-family: var(--font-heading);
+  font-size: 0.92rem;
+  color: var(--text-gold);
+}
+
+.sacred-image-info p {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+/* ===================================================================
+   ZAKŁADKA: 33 DNI (KALENDARZ I ETAPY)
+   =================================================================== */
+.progress-summary-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-card);
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 18px;
+  text-align: center;
+}
+
+.progress-title {
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  color: var(--text-gold);
+  margin-bottom: 4px;
+}
+
+.progress-text {
+  font-size: 0.88rem;
+  color: var(--text-main);
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.progress-bar-track {
+  width: 100%;
+  height: 8px;
+  background-color: var(--bg-input);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background-color: var(--color-success);
+  transition: width 0.3s ease;
+}
+
+/* Etapy rekolekcji */
+.stage-block {
+  margin-bottom: 22px;
+}
+
+.stage-header {
+  padding: 10px 14px;
+  background-color: var(--bg-card-subtle);
+  border: 1px solid var(--border-card);
+  border-left: 4px solid var(--border-gold);
+  border-radius: 6px;
+  margin-bottom: 10px;
+}
+
+.stage-title {
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.stage-subtitle {
+  font-size: 0.78rem;
+  color: var(--text-gold);
+  font-weight: 600;
+}
+
+.stage-desc {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+/* Lista dni w kalendarzu */
+.day-row-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-card);
+  border-radius: 6px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+  font-size: var(--reader-font-size);
+}
+
+.day-row-item.current {
+  border-color: var(--border-gold);
+  background-color: var(--color-primary-bg);
+}
+
+.day-row-item.completed {
+  border-color: rgba(31, 122, 77, 0.4);
+}
+
+.day-row-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  min-width: 0;
+}
+
+.day-number-circle {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid var(--border-card);
+  background-color: var(--bg-card-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--text-main);
+  flex-shrink: 0;
+}
+
+.day-number-circle.completed {
+  background-color: var(--color-success);
+  border-color: var(--color-success);
+  color: #ffffff;
+}
+
+.day-number-circle.gold {
+  background-color: var(--color-primary-bg);
+  border-color: var(--border-gold);
+  color: var(--text-gold);
+}
+
+.day-number-circle.gold.completed {
+  background-color: var(--color-success);
+  border-color: var(--color-success);
+  color: #ffffff;
+}
+
+.day-info-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.day-info-title {
+  font-size: calc(var(--reader-font-size) * 0.95);
+  font-weight: 600;
+  color: var(--text-main);
+  line-height: 1.35;
+  word-break: break-word;
+}
+
+.day-info-meta {
+  font-size: calc(var(--reader-font-size) * 0.75);
+  color: var(--text-muted);
+  margin-top: 3px;
+  line-height: 1.3;
+  word-break: break-word;
+}
+
+.check-toggle-btn {
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--border-card);
+  background-color: var(--bg-card-subtle);
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-left: 8px;
+}
+
+.check-toggle-btn.completed {
+  background-color: var(--color-success-bg);
+  border-color: var(--color-success);
+  color: var(--color-success);
+}
+
+/* ===================================================================
+   ELEMENTY CZYTANIA I ROZWAŻANIA
+   =================================================================== */
+.day-patronage-pill {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background-color: var(--color-primary-bg);
+  border: 1px solid var(--border-gold);
+  color: var(--text-gold);
+  font-size: 0.82rem;
+  font-weight: 600;
+  margin-top: 6px;
+  line-height: 1.4;
+  word-break: break-word;
+}
+
+.scripture-badge {
+  display: inline-block;
+  margin-bottom: 16px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  background-color: var(--bg-card-subtle);
+  border: 1px solid var(--border-card);
+  font-size: 0.9rem;
+  color: var(--text-main);
+}
+
+.section-subtitle {
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-gold);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+}
+
+.examination-box {
+  margin-top: 24px;
+  padding: 16px;
+  border-radius: 8px;
+  background-color: var(--bg-card-subtle);
+  border: 1px solid var(--border-card);
+}
+
+.examination-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.examination-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin-bottom: 12px;
+  font-family: var(--font-serif);
+  font-size: var(--reader-font-size);
+  line-height: var(--reader-line-height);
+  color: var(--text-main);
+}
+
+.exam-bullet {
+  color: var(--text-gold);
+  font-weight: bold;
+  font-size: 1.2em;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.daily-prayers-checklist {
+  list-style: none;
+  padding: 0;
+  margin: 8px 0 0 0;
+}
+
+.daily-prayer-item {
+  padding: 6px 0;
+  border-bottom: 1px dashed var(--border-card);
+  font-size: calc(var(--reader-font-size) * 0.9);
+  color: var(--text-main);
+  line-height: 1.4;
+}
+
+.daily-prayer-item:last-child {
+  border-bottom: none;
+}
+
+.secondary-outline-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: 1px solid var(--border-gold);
+  background-color: transparent;
+  color: var(--text-gold);
+  font-weight: 600;
+  font-size: 0.88rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.secondary-outline-btn:active {
+  background-color: var(--color-primary-bg);
+}
+
+.footnote-box {
+  line-height: 1.5;
+  word-break: break-word;
+}
+
+.consecration-block {
+  border: 1.5px solid var(--border-gold);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.consecration-row {
+  margin-bottom: 0 !important;
+  background-color: var(--color-primary-bg) !important;
+}
+
+/* ===================================================================
+   ZAKŁADKA: SKARBIEC MODLITW (AKORDEON)
+   =================================================================== */
+.prayers-accordion {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.prayer-accordion-item {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-card);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: border-color 0.2s ease;
+}
+
+.prayer-accordion-item.expanded {
+  border-color: var(--border-gold);
+}
+
+.prayer-accordion-item.completed {
+  border-color: rgba(31, 122, 77, 0.4);
+}
+
+.prayer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  cursor: pointer;
+  user-select: none;
+  gap: 8px;
+}
+
+.prayer-header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  min-width: 0;
+}
+
+.prayer-check-circle {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid var(--border-card);
+  background-color: var(--bg-card-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+.prayer-check-circle.completed {
+  background-color: var(--color-success);
+  border-color: var(--color-success);
+  color: #ffffff;
+}
+
+.prayer-title-text {
+  font-family: var(--font-heading);
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: var(--text-main);
+  line-height: 1.3;
+  word-break: break-word;
+}
+
+.prayer-author-text {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+  line-height: 1.25;
+}
+
+.prayer-header-right {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.audio-mini-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  border: 1px solid var(--border-card);
+  background-color: var(--bg-card-subtle);
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.audio-mini-btn.active {
+  background-color: var(--text-red);
+  color: #ffffff;
+  border-color: var(--text-red);
+}
+
+.prayer-check-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  border: 1px solid var(--border-card);
+  background-color: var(--bg-card-subtle);
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.prayer-check-btn.completed {
+  background-color: var(--color-success-bg);
+  border-color: var(--color-success);
+  color: var(--color-success);
+}
+
+.expand-indicator {
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.prayer-content-wrap {
+  padding: 14px 16px 18px 16px;
+  border-top: 1px solid var(--border-card);
+  background-color: var(--bg-card);
+}
+
+.prayer-full-text {
+  font-family: var(--font-serif);
+  font-size: var(--reader-font-size);
+  line-height: var(--reader-line-height);
+  color: var(--text-main);
+  word-break: break-word;
+}
+
+.prayer-bottom-action {
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px dashed var(--border-card);
+}
+
+/* ===================================================================
+   ZAKŁADKA: USTAWIENIA I DOSTĘPNOŚĆ
+   =================================================================== */
+.settings-section {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-card);
+  border-radius: 8px;
+  padding: 18px;
+  margin-bottom: 16px;
+}
+
+.settings-heading {
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-gold);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.settings-btn-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.settings-select-btn {
+  padding: 10px;
+  border-radius: 6px;
+  border: 1.5px solid var(--border-card);
+  background-color: var(--bg-card-subtle);
+  color: var(--text-main);
+  font-weight: 600;
+  font-size: 0.88rem;
+  text-align: center;
+}
+
+.settings-select-btn.active {
+  border-color: var(--border-gold);
+  background-color: var(--color-primary-bg);
+  font-weight: 700;
+}
+
+.danger-btn {
+  width: 100%;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid var(--text-red);
+  background-color: transparent;
+  color: var(--text-red);
+  font-weight: 600;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
