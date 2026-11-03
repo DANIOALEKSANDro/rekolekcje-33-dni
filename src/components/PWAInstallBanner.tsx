@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Download, Share, PlusSquare, X, Check } from 'lucide-react';
+import { Download, Share, PlusSquare, X, Check, ExternalLink, Globe, MoreHorizontal, MoreVertical } from 'lucide-react';
 
 interface PWAInstallBannerProps {
   onOpenIOSGuide?: () => void;
@@ -8,10 +8,13 @@ interface PWAInstallBannerProps {
 export const PWAInstallBanner: React.FC<PWAInstallBannerProps> = () => {
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
   const [isIOS, setIsIOS] = useState<boolean>(false);
+  const [isAndroid, setIsAndroid] = useState<boolean>(false);
+  const [isInAppBrowser, setIsInAppBrowser] = useState<boolean>(false);
   const [isStandalone, setIsStandalone] = useState<boolean>(false);
   const [bannerDismissed, setBannerDismissed] = useState<boolean>(true);
   const [showIOSModal, setShowIOSModal] = useState<boolean>(false);
   const [showAndroidModal, setShowAndroidModal] = useState<boolean>(false);
+  const [showInAppModal, setShowInAppModal] = useState<boolean>(false);
 
   useEffect(() => {
     // 1. Sprawdź, czy aplikacja jest już uruchomiona w trybie standalone (zainstalowana)
@@ -22,13 +25,20 @@ export const PWAInstallBanner: React.FC<PWAInstallBannerProps> = () => {
 
     setIsStandalone(checkStandalone);
 
-    // 2. Wykryj system iOS (iPhone / iPad / iPod)
-    const userAgent = window.navigator.userAgent.toLowerCase();
-    const isIOSDevice = /iphone|ipad|ipod/.test(userAgent) || 
-      (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1); // iPadOS Safari
+    // 2. Wykryj system iOS (iPhone / iPad / iPod) oraz Android
+    const userAgent = window.navigator.userAgent || '';
+    const isIOSDevice = /iphone|ipad|ipod/i.test(userAgent) || 
+      (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
     setIsIOS(isIOSDevice);
 
-    // 3. Sprawdź, czy użytkownik odrzucił baner w ostatnich 3 dniach
+    const isAndroidDevice = /android/i.test(userAgent);
+    setIsAndroid(isAndroidDevice);
+
+    // 3. Wykryj przeglądarkę wbudowaną w aplikację (In-App Browser: Messenger, Facebook, Instagram itp.)
+    const inApp = /FBAN|FBAV|Messenger|Instagram|Line|Twitter|Snapchat|TikTok|MicroMessenger/i.test(userAgent);
+    setIsInAppBrowser(inApp);
+
+    // 4. Sprawdź, czy użytkownik odrzucił baner w ostatnich 3 dniach
     const dismissedTime = localStorage.getItem('rekolekcje_install_banner_dismissed');
     const threeDays = 3 * 24 * 60 * 60 * 1000;
     const isRecentlyDismissed = dismissedTime && (Date.now() - Number(dismissedTime) < threeDays);
@@ -37,7 +47,7 @@ export const PWAInstallBanner: React.FC<PWAInstallBannerProps> = () => {
       setBannerDismissed(false);
     }
 
-    // 4. Nasłuchuj natywnego zdarzenia beforeinstallprompt (Android / Chrome / Edge)
+    // 5. Nasłuchuj natywnego zdarzenia beforeinstallprompt (Android / Chrome / Edge)
     const handleBeforeInstallPrompt = (e: Event) => {
       e.preventDefault();
       setDeferredPrompt(e);
@@ -48,7 +58,7 @@ export const PWAInstallBanner: React.FC<PWAInstallBannerProps> = () => {
 
     window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
 
-    // 5. Nasłuchuj zdarzenia pomyślnej instalacji
+    // 6. Nasłuchuj zdarzenia pomyślnej instalacji
     const handleAppInstalled = () => {
       setIsStandalone(true);
       setBannerDismissed(true);
@@ -57,9 +67,11 @@ export const PWAInstallBanner: React.FC<PWAInstallBannerProps> = () => {
 
     window.addEventListener('appinstalled', handleAppInstalled);
 
-    // 6. Nasłuchuj ręcznego wywołania (np. z zakładki Ustawienia)
+    // 7. Nasłuchuj ręcznego wywołania (np. z zakładki Ustawienia)
     const handleOpenManual = () => {
-      if (deferredPrompt) {
+      if (inApp) {
+        setShowInAppModal(true);
+      } else if (deferredPrompt) {
         deferredPrompt.prompt().then(() => {
           setDeferredPrompt(null);
         }).catch(() => {});
@@ -84,6 +96,12 @@ export const PWAInstallBanner: React.FC<PWAInstallBannerProps> = () => {
   };
 
   const handleInstallClick = async () => {
+    // Jeśli użytkownik jest wewnątrz Messengera / Facebooka
+    if (isInAppBrowser) {
+      setShowInAppModal(true);
+      return;
+    }
+
     if (deferredPrompt) {
       // Natywny prompt Chrome / Android
       try {
@@ -105,14 +123,19 @@ export const PWAInstallBanner: React.FC<PWAInstallBannerProps> = () => {
     }
   };
 
-  // Jeśli aplikacja jest już zainstalowana lub baner odrzucony (i modale zamknięte)
-  if (isStandalone && !showIOSModal && !showAndroidModal) {
+  // Jeśli aplikacja jest już zainstalowana i żaden modal nie jest otwarty
+  if (isStandalone && !showIOSModal && !showAndroidModal && !showInAppModal) {
     return null;
   }
 
+  // Link Intent dla Androida pozwalający wyskoczyć z Messengera do Chrome
+  const androidChromeIntentUrl = typeof window !== 'undefined'
+    ? `intent://${window.location.host}${window.location.pathname}${window.location.search}#Intent;scheme=https;package=com.android.chrome;end`
+    : '#';
+
   return (
     <>
-      {/* Pływający pasek instalacji u góry / na dole */}
+      {/* Pływający pasek instalacji u dołu ekranu */}
       {!bannerDismissed && !isStandalone && (
         <aside className="pwa-install-banner" aria-label="Instalacja aplikacji">
           <div className="pwa-banner-content">
@@ -122,11 +145,15 @@ export const PWAInstallBanner: React.FC<PWAInstallBannerProps> = () => {
               className="pwa-banner-icon" 
             />
             <div className="pwa-banner-text">
-              <strong className="pwa-banner-title">Zainstaluj na telefonie</strong>
+              <strong className="pwa-banner-title">
+                {isInAppBrowser 
+                  ? (isIOS ? 'Otwórz w Safari' : 'Otwórz w Chrome')
+                  : 'Zainstaluj na telefonie'}
+              </strong>
               <span className="pwa-banner-desc">
-                {isIOS 
-                  ? 'Dodaj do ekranu głównego iPhone’a' 
-                  : 'Szybki dostęp i czytanie offline'}
+                {isInAppBrowser
+                  ? 'Messenger blokuje instalację. Dotknij, aby zobaczyć jak.'
+                  : (isIOS ? 'Dodaj do ekranu głównego iPhone’a' : 'Szybki dostęp i czytanie offline')}
               </span>
             </div>
           </div>
@@ -135,10 +162,10 @@ export const PWAInstallBanner: React.FC<PWAInstallBannerProps> = () => {
             <button 
               className="pwa-install-btn"
               onClick={handleInstallClick}
-              aria-label="Zainstaluj aplikację"
+              aria-label={isInAppBrowser ? "Otwórz w przeglądarce" : "Zainstaluj aplikację"}
             >
-              <Download size={16} />
-              <span>Zainstaluj</span>
+              {isInAppBrowser ? <ExternalLink size={16} /> : <Download size={16} />}
+              <span>{isInAppBrowser ? 'Otwórz' : 'Zainstaluj'}</span>
             </button>
             <button 
               className="pwa-dismiss-btn" 
@@ -150,6 +177,125 @@ export const PWAInstallBanner: React.FC<PWAInstallBannerProps> = () => {
             </button>
           </div>
         </aside>
+      )}
+
+      {/* MODAL SPECJALNY: Dla użytkowników wewnątrz Messengera / Facebooka / Instagrama */}
+      {showInAppModal && (
+        <div className="pwa-modal-backdrop" onClick={() => setShowInAppModal(false)}>
+          <div className="pwa-modal-card" onClick={(e) => e.stopPropagation()} role="dialog" aria-modal="true">
+            <button className="pwa-modal-close" onClick={() => setShowInAppModal(false)} aria-label="Zamknij">
+              <X size={20} />
+            </button>
+
+            <div className="pwa-modal-header">
+              <div style={{ width: 54, height: 54, borderRadius: '50%', backgroundColor: 'var(--color-primary-bg)', border: '1px solid var(--border-gold)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 10px auto', color: 'var(--text-gold)' }}>
+                <Globe size={26} />
+              </div>
+              <h3>Otwórz w przeglądarce telefonu</h3>
+              <p>Otworzyłeś stronę wewnątrz komunikatora Messenger</p>
+            </div>
+
+            <div style={{ padding: '12px 14px', borderRadius: '8px', backgroundColor: 'var(--bg-card-subtle)', border: '1px dashed var(--border-gold)', fontSize: '0.86rem', color: 'var(--text-main)', marginBottom: '16px', lineHeight: 1.5 }}>
+              Wbudowana przeglądarka Messenger blokuje instalację aplikacji i pobieranie modlitw offline. Aby móc zainstalować aplikację:
+            </div>
+
+            {isIOS ? (
+              /* Instrukcja dla iPhone wewnątrz Messengera */
+              <div className="pwa-ios-steps">
+                <div className="pwa-step-item">
+                  <div className="pwa-step-num">1</div>
+                  <div className="pwa-step-body">
+                    <div className="pwa-step-title">
+                      Dotknij menu <strong>(•••)</strong> w rogu Messengera
+                      <span className="pwa-ios-icon-badge">
+                        <MoreHorizontal size={18} />
+                      </span>
+                    </div>
+                    <p className="pwa-step-desc">
+                      Ikona trzech kropek znajduje się w prawym górnym lub dolnym rogu ekranu.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="pwa-step-item">
+                  <div className="pwa-step-num">2</div>
+                  <div className="pwa-step-body">
+                    <div className="pwa-step-title">
+                      Wybierz <strong>„Otwórz w Safari”</strong>
+                      <span className="pwa-ios-icon-badge">
+                        <ExternalLink size={18} />
+                      </span>
+                    </div>
+                    <p className="pwa-step-desc">
+                      Strona otworzy się w pełnej przeglądarce Apple Safari.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="pwa-step-item">
+                  <div className="pwa-step-num">3</div>
+                  <div className="pwa-step-body">
+                    <div className="pwa-step-title">
+                      W Safari kliknij <strong>Udostępnij ➔ Do ekranu początkowego</strong>
+                    </div>
+                    <p className="pwa-step-desc">
+                      Wtedy ikona pojawi się na pulpicie Twojego iPhone'a!
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              /* Instrukcja dla Androida wewnątrz Messengera */
+              <div className="pwa-ios-steps">
+                <div className="pwa-step-item">
+                  <div className="pwa-step-num">1</div>
+                  <div className="pwa-step-body">
+                    <div className="pwa-step-title">
+                      Dotknij trzech kropek <strong>(⋮)</strong>
+                      <span className="pwa-ios-icon-badge">
+                        <MoreVertical size={18} />
+                      </span>
+                    </div>
+                    <p className="pwa-step-desc">
+                      Znajdziesz je w prawym górnym rogu okna Messengera.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="pwa-step-item">
+                  <div className="pwa-step-num">2</div>
+                  <div className="pwa-step-body">
+                    <div className="pwa-step-title">
+                      Wybierz <strong>„Otwórz w Chrome”</strong> lub <strong>„Otwórz w przeglądarce”</strong>
+                    </div>
+                    <p className="pwa-step-desc">
+                      W Chrome od razu pojawi się przycisk „Zainstaluj aplikację”.
+                    </p>
+                  </div>
+                </div>
+
+                {isAndroid && (
+                  <div style={{ marginTop: '8px' }}>
+                    <a 
+                      href={androidChromeIntentUrl}
+                      className="mark-done-btn"
+                      style={{ textDecoration: 'none', textAlign: 'center', backgroundColor: 'var(--color-primary-bg)', color: 'var(--text-gold)', borderColor: 'var(--border-gold)' }}
+                    >
+                      <ExternalLink size={18} />
+                      <span>Kliknij tutaj, aby przejść do Chrome</span>
+                    </a>
+                  </div>
+                )}
+              </div>
+            )}
+
+            <div className="pwa-modal-footer">
+              <button className="mark-done-btn" onClick={() => setShowInAppModal(false)}>
+                Rozumiem
+              </button>
+            </div>
+          </div>
+        </div>
       )}
 
       {/* MODAL 1: Instrukcja krok po kroku dla iPhone / iPad (iOS Safari) */}
