@@ -22,6 +22,15 @@ export const PrayersTab: React.FC<PrayersTabProps> = ({
   return (
     <div className="main-view" style={{ '--reader-font-size': `${fontSize}px` } as React.CSSProperties}>
       
+      {/* Obraz: Maryja na tronie */}
+      <div className="prayers-hero-image-wrap">
+        <img 
+          src="/maryja-na-tronie.jpg" 
+          alt="Maryja Królowa na tronie" 
+          className="prayers-hero-image"
+        />
+      </div>
+
       {/* Nagłówek skarbca modlitw */}
       <div style={{ textAlign: 'center', marginBottom: '18px' }}>
         <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.3rem', color: 'var(--text-gold)', marginBottom: '4px' }}>

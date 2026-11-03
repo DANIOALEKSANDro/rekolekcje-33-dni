@@ -819,6 +819,23 @@ button {
 /* ===================================================================
    ZAKŁADKA: SKARBIEC MODLITW (W STYLU BLOCZKÓW ETAPÓW)
    =================================================================== */
+.prayers-hero-image-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto 16px auto;
+}
+
+.prayers-hero-image {
+  width: 130px;
+  max-width: 45vw;
+  height: auto;
+  border-radius: 8px;
+  border: 1.5px solid var(--border-gold);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  object-fit: cover;
+}
+
 .prayers-accordion {
   display: flex;
   flex-direction: column;
