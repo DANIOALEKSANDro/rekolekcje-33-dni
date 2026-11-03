@@ -1,5 +1,5 @@
 import React from 'react';
-import { Type, Moon, Sun, Contrast, RotateCcw, Database, Calendar } from 'lucide-react';
+import { Type, Moon, Sun, Contrast, RotateCcw, Database, Calendar, Smartphone, Download } from 'lucide-react';
 
 interface SettingsTabProps {
   fontSize: number;
@@ -189,7 +189,40 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
         </button>
       </section>
 
-      {/* 4. Pamięć i postępy (Cache storage) */}
+      {/* 4. Instalacja na telefonie (PWA) */}
+      <section className="settings-section">
+        <h3 className="settings-heading">
+          <Smartphone size={18} />
+          <span>Aplikacja na telefon (PWA)</span>
+        </h3>
+        <p style={{ fontSize: '0.88rem', color: 'var(--text-muted)', marginBottom: '12px', lineHeight: 1.5 }}>
+          Możesz dodać aplikację do ekranu głównego telefonu (iPhone lub Android). Działa jak tradycyjna aplikacja z App Store / Google Play, bez paska adresu i z pełnym dostępem offline.
+        </p>
+
+        <button
+          className="top-btn"
+          style={{ 
+            width: '100%', 
+            height: 'auto', 
+            padding: '12px 14px', 
+            fontSize: '0.9rem', 
+            fontWeight: 700, 
+            gap: '8px', 
+            color: 'var(--text-gold)', 
+            borderColor: 'var(--border-gold)',
+            backgroundColor: 'var(--color-primary-bg)'
+          }}
+          onClick={() => {
+            localStorage.removeItem('rekolekcje_install_banner_dismissed');
+            window.dispatchEvent(new CustomEvent('open-pwa-install'));
+          }}
+        >
+          <Download size={18} />
+          <span>Zainstaluj lub zobacz instrukcję (Android / iPhone)</span>
+        </button>
+      </section>
+
+      {/* 5. Pamięć i postępy (Cache storage) */}
       <section className="settings-section">
         <h3 className="settings-heading">
           <Database size={18} />

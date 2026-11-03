@@ -1,6 +1,6 @@
 {
-  "short_name": "Rekolekcje z Maryją",
-  "name": " ",
+  "short_name": "Rekolekcje",
+  "name": "Rekolekcje z Maryją",
   "icons": [
     {
       "src": "/icon-192.png",
@@ -15,7 +15,8 @@
     {
       "src": "/app-icon.png",
       "type": "image/png",
-      "sizes": "any maskable"
+      "sizes": "512x512",
+      "purpose": "any maskable"
     }
   ],
   "start_url": "/",

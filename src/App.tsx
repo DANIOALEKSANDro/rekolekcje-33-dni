@@ -5,6 +5,7 @@ import { MainTab } from './components/MainTab';
 import { CalendarTab } from './components/CalendarTab';
 import { PrayersTab } from './components/PrayersTab';
 import { SettingsTab } from './components/SettingsTab';
+import { PWAInstallBanner } from './components/PWAInstallBanner';
 
 export const App: React.FC = () => {
   // Navigation tabs: 'today' | 'calendar' | 'prayers' | 'settings'
@@ -226,6 +227,9 @@ export const App: React.FC = () => {
           />
         )}
       </main>
+
+      {/* Pływający baner instalacji PWA (Android / Chrome) oraz instrukcja dla iOS Safari */}
+      <PWAInstallBanner />
 
       {/* Dolny pasek zakładek (Dziś, 33 Dni, Modlitwy, Ustawienia) */}
       <nav className="bottom-nav" aria-label="Nawigacja główna">
