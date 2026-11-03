@@ -1,8 +1,8 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'com.rekolekcje.maryja33dni',
-  appName: '33 dni z Maryją',
+  appId: 'com.rekolekcje.maryja',
+  appName: 'Rekolekcje z Maryją',
   webDir: 'dist',
   server: {
     androidScheme: 'https'

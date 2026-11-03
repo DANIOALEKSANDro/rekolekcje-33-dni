@@ -160,7 +160,7 @@ export const App: React.FC = () => {
             className="brand-portrait" 
           />
           <div>
-            <h1 className="brand-title">33 Dni z Maryją</h1>
+            <h1 className="brand-title">Rekolekcje z Maryją</h1>
             <div className="brand-subtitle">
               {currentActiveDayNum === 34 ? 'Dzień Ofiarowania (8 XII)' : `Dzień ${currentActiveDayNum} z 33`}
             </div>
