@@ -46,7 +46,7 @@ export const MainTab: React.FC<MainTabProps> = ({
           className="sacred-image-thumb"
         />
         <div className="sacred-image-info">
-          <h4>Matka Boża Miłosierdzia</h4>
+          <h4>Matka Boża</h4>
           <p><em>«Wszystko z Maryją, przez Maryję i dla Maryi»</em></p>
         </div>
       </div>
@@ -157,8 +157,8 @@ export const MainTab: React.FC<MainTabProps> = ({
               {currentDay.prayersList.map((pr, idx) => {
                 const targetId = resolvePrayerId(pr);
                 return (
-                  <li 
-                    key={idx} 
+                  <li
+                    key={idx}
                     className={`daily-prayer-item ${targetId ? 'clickable-prayer' : ''}`}
                     onClick={() => {
                       if (targetId) {
