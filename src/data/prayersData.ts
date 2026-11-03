@@ -71,5 +71,35 @@ export const ALL_PRAYERS_DATA: FullPrayerItem[] = [
  "title": "Akt Ofiarowania się Jezusowi Chrystusowi przez ręce Maryi",
  "author": "Św. Ludwik Maria Grignion de Montfort",
  "text": "O Mądrości Odwieczna i Wcielona! O najsłodszy i najbardziej czcigodny Jezu, prawdziwy Boże i prawdziwy Człowieku, Synu Jednorodzony Ojca Przedwiecznego i Maryi, zawsze Dziewicy!\nOddaję Ci głęboki pokłon w łonie i chwale Twego Ojca w wieczności, oraz w dziewiczym łonie Maryi, Twej najgodniejszej Matki, w czasie Twego Wcielenia.\nDziękuję Ci, żeś wyniszczył samego siebie, przyjmując postać sługi, by mnie wybawić z okrutnej niewoli szatana.\n\nW obecności całego Dworu Niebieskiego obieram Cię dzisiaj, o Maryjo, za moją Matkę i Królową.\nOddaję Ci i poświęcam, jako Twój niewolnik z miłości, moje ciało i moją duszę, moje dobra wewnętrzne i zewnętrzne, a nawet wartość moich dobrych uczynków, przeszłych, teraźniejszych i przyszłych.\nPozostawiam Ci całkowite i zupełne prawo dysponowania mną i wszystkim bez wyjątku, co do mnie należy, według Twojego upodobania, ku większej chwale Boga w czasie i w wieczności.\n\nPrzyjmij, o Panno łaskawa, tę moją drobną ofiarę. Spraw, abym we wszystkim był wiernym uczniem, naśladowcą i niewolnikiem Twej macierzyńskiej Miłości. Amen."
+ },
+ {
+ "id": "te-deum",
+ "title": "Hymn Te Deum (Ciebie, Boga, wysławiamy)",
+ "author": "Tradycyjny hymn dziękczynny Kościoła",
+ "text": "Ciebie, Boga, wysławiamy,\nTobie, Panu, wieczna chwała.\nCiebie, Ojca, niebios bramy,\nCiebie wielbi ziemia cała.\n\nTobie wszyscy Aniołowie,\nTobie Moce i Niebiosy,\nCherubini, Serafowie,\nŚlą wieczystej pieśni głosy:\n\nŚwięty, Święty, Święty Pan,\nBóg Zastępów, Król wszechświata,\nPełne są niebiosa chwały,\nPełna ziemia Twego majestatu.\n\nApostołów święte grono,\nProroków chór promienisty,\nMęczenników szlachetna rzesza\nWielbi Twe Imię, o Chryste!\n\nCiebie po wszech krańcach ziemi\nKościół święty sławić spieszy,\nOjca nieogarnionego,\nSyna Twego, Pełnego chwały,\nI Ducha, Wspomożyciela naszego.\n\nTyś jest Królem chwały, Chryste,\nTyś Ojca Syn Przedwieczny.\nTy, dla zbawienia naszego,\nNie wzgardziłeś Panną czystą.\n\nTyś skruszył śmierci żądło,\nOtworzył wiernym niebiosa.\nTy siedzisz po prawicy Ojca,\nW chwale niebieskiego tronu.\n\nWierzymy, że przyjdziesz sądzić,\nPrzeto błagamy, o Panie,\nRatuj sługi odkupione\nNajdroższą Krwią Twoją.\n\nDołącz nas do świętych Twoich\nW chwale wieczystej.\nZachowaj lud Twój, o Panie,\nI błogosław dziedzictwu Twemu.\n\nRządź nami i wywyższaj nas na wieki.\nPo wszystkie dni błogosławimy Ciebie\nI wysławiamy Imię Twoje na wieki wieków.\n\nRaczyłeś, Panie, dnia tego\nZachować nas od grzechu.\nZmiłuj się nad nami, Panie,\nZmiłuj się nad nami.\n\nNiech miłosierdzie Twe spłynie na nas,\nJako w Tobie pokładamy nadzieję.\nW Tobie, Panie, zaufałem,\nNie zawstydzę się na wieki. Amen."
+ },
+ {
+ "id": "magnificat",
+ "title": "Magnificat (Wielbi dusza moja Pana)",
+ "author": "Ewangelia wg św. Łukasza (Łk 1, 46-55)",
+ "text": "Wielbi dusza moja Pana,\ni raduje się duch mój w Bogu, moim Zbawcy.\n\nBo wejrzał na uniżenie swojej Służebnicy.\nOto bowiem odtąd błogosławić mnie będą wszystkie pokolenia,\n\ngdyż wielkie rzeczy uczynił mi Wszechmocny,\na Jego imię jest święte.\n\nJego miłosierdzie z pokolenia na pokolenie\nnad tymi, którzy się Go boją.\n\nOkazał moc swego ramienia,\nrozproszył pyszniących się zamysłami serc swoich.\n\nStrącił władców z tronu,\na wywyższył pokornych.\n\nGłodnych nasycił dobrami,\na bogatych z niczym odprawił.\n\nUjął się za swoim sługą, Izraelem,\npomny na swe miłosierdzie,\n\njak obiecał naszym ojcom,\nAbrahamowi i jego potomstwu na wieki.\n\nChwała Ojcu i Synowi, i Duchowi Świętemu,\njak była na początku, teraz i zawsze,\ni na wieki wieków. Amen."
  }
 ];
+
+export const resolvePrayerId = (text: string): string | null => {
+  const lower = text.toLowerCase();
+  if (lower.includes('stworzycielu') || lower.includes('veni creator')) return 'hymn-ducha';
+  if (lower.includes('gwiazdo morza') || lower.includes('ave maris stella')) return 'ave-maris-stella';
+  if (lower.includes('litania do ducha')) return 'litania-ducha';
+  if (lower.includes('litania loreta') || lower.includes('loretanska') || lower.includes('loretańska')) return 'litania-loretanska';
+  if (lower.includes('litania do imienia jezus')) return 'litania-imienia-jezus';
+  if (lower.includes('augustyn')) return 'augustyn';
+  if (lower.includes('ofiarowania') || lower.includes('oddania')) return 'akt-ofiarowania';
+  if (lower.includes('poranna')) return 'poranna';
+  if (lower.includes('wieczorn') || lower.includes('rachunek sumienia')) return 'wieczorne';
+  if (lower.includes('te deum') || lower.includes('ciebie, boga')) return 'te-deum';
+  if (lower.includes('magnificat') || lower.includes('wielbi dusza')) return 'magnificat';
+  if (lower.includes('przymierze')) return 'przymierze';
+  if (lower.includes('praktyki')) return 'praktyki-chrzcielne';
+  return null;
+};

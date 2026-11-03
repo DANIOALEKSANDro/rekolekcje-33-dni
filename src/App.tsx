@@ -125,6 +125,16 @@ export const App: React.FC = () => {
     document.body.scrollTop = 0;
   };
 
+  // Wybrana modlitwa do natychmiastowego otwarcia w zakładce Modlitwy
+  const [targetPrayerId, setTargetPrayerId] = useState<string | null>(null);
+
+  const handleOpenPrayers = (prayerId?: string) => {
+    if (prayerId) {
+      setTargetPrayerId(prayerId);
+    }
+    handleTabChange('prayers');
+  };
+
   // Toggle completed status for a day
   const toggleCompleteDay = (day: number) => {
     setCompletedDays(prev => 
@@ -206,7 +216,7 @@ export const App: React.FC = () => {
             completedDays={completedDays}
             onToggleCompleteDay={toggleCompleteDay}
             fontSize={fontSize}
-            onOpenPrayers={() => handleTabChange('prayers')}
+            onOpenPrayers={handleOpenPrayers}
           />
         )}
 
@@ -225,6 +235,8 @@ export const App: React.FC = () => {
             fontSize={fontSize}
             completedPrayers={completedPrayers}
             onToggleCompletePrayer={toggleCompletePrayer}
+            targetPrayerId={targetPrayerId}
+            onClearTargetPrayer={() => setTargetPrayerId(null)}
           />
         )}
 

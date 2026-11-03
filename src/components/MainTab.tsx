@@ -1,6 +1,7 @@
 import React from 'react';
 import { ChevronLeft, ChevronRight, Check, BookOpen, BookmarkCheck, ArrowRight, Info } from 'lucide-react';
 import { RetreatDay } from '../data/retreatData';
+import { resolvePrayerId } from '../data/prayersData';
 
 interface MainTabProps {
   currentDay: RetreatDay;
@@ -8,7 +9,7 @@ interface MainTabProps {
   completedDays: number[];
   onToggleCompleteDay: (dayNum: number) => void;
   fontSize: number;
-  onOpenPrayers: () => void;
+  onOpenPrayers: (prayerId?: string) => void;
 }
 
 export const MainTab: React.FC<MainTabProps> = ({
@@ -150,19 +151,38 @@ export const MainTab: React.FC<MainTabProps> = ({
           <section className="prayer-day-box" aria-label="Modlitwy na dziś">
             <div className="prayer-label">
               <BookOpen size={17} />
-              <span>Modlitwy na dziś (z modlitewnika)</span>
+              <span>Modlitwy na dziś (dotknij, aby otworzyć tekst)</span>
             </div>
             <ul className="daily-prayers-checklist">
-              {currentDay.prayersList.map((pr, idx) => (
-                <li key={idx} className="daily-prayer-item">
-                  <span>{pr}</span>
-                </li>
-              ))}
+              {currentDay.prayersList.map((pr, idx) => {
+                const targetId = resolvePrayerId(pr);
+                return (
+                  <li 
+                    key={idx} 
+                    className={`daily-prayer-item ${targetId ? 'clickable-prayer' : ''}`}
+                    onClick={() => {
+                      if (targetId) {
+                        onOpenPrayers(targetId);
+                      } else {
+                        onOpenPrayers();
+                      }
+                    }}
+                    role="button"
+                    tabIndex={0}
+                    style={{ cursor: targetId ? 'pointer' : 'default' }}
+                  >
+                    <span>{pr}</span>
+                    {targetId && (
+                      <ArrowRight size={15} style={{ opacity: 0.6, flexShrink: 0, marginLeft: '6px' }} />
+                    )}
+                  </li>
+                );
+              })}
             </ul>
             <div style={{ marginTop: '14px', textAlign: 'center' }}>
               <button
                 className="secondary-outline-btn"
-                onClick={onOpenPrayers}
+                onClick={() => onOpenPrayers()}
               >
                 <span>Otwórz Skarbiec Modlitw</span>
                 <ArrowRight size={16} />

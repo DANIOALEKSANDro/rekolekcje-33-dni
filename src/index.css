@@ -798,11 +798,25 @@ button {
 }
 
 .daily-prayer-item {
-  padding: 6px 0;
+  padding: 8px 6px;
   border-bottom: 1px dashed var(--border-card);
   font-size: calc(var(--reader-font-size) * 0.9);
   color: var(--text-main);
-  line-height: 1.4;
+  line-height: 1.45;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.15s ease;
+  border-radius: 4px;
+}
+
+.daily-prayer-item.clickable-prayer:hover {
+  background-color: var(--color-primary-bg);
+  color: var(--text-gold);
+}
+
+.daily-prayer-item.clickable-prayer:active {
+  transform: scale(0.99);
 }
 
 .daily-prayer-item:last-child {

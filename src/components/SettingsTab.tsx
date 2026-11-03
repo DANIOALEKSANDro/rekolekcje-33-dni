@@ -38,7 +38,7 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
 
   return (
     <div className="main-view">
-      
+
       <div style={{ textAlign: 'center', marginBottom: '20px' }}>
         <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.25rem', color: 'var(--text-gold)' }}>
           Ustawienia i Dostępność
@@ -136,7 +136,7 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
         </p>
 
         <div style={{ width: '100%', marginBottom: '8px' }}>
-          <select 
+          <select
             value={currentActiveDayNum}
             onChange={(e) => setCurrentActiveDayNum(Number(e.target.value))}
             style={{
@@ -190,7 +190,7 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
             }
           }}
         >
-          📅 Ustaw automatycznie według daty urządzenia (5 XI – 8 XII)
+          Ustaw automatycznie według daty urządzenia (5 XI – 8 XII)
         </button>
       </section>
 
@@ -201,7 +201,7 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
           <span>Pamięć aplikacji (Cache / LocalStorage)</span>
         </h3>
         <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)', marginBottom: '12px', lineHeight: 1.5 }}>
-          Wszystkie Twoje oznaczone dni i modlitwy są bezpiecznie zapisywane w pamięci tej przeglądarki na telefonie. 
+          Wszystkie Twoje oznaczone dni i modlitwy są bezpiecznie zapisywane w pamięci tej przeglądarki na telefonie.
           Nie potrzebujesz logowania ani konta internetowego.
         </p>
 
@@ -210,7 +210,7 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
           <div>Odmówione modlitwy ze skarbca: <strong>{completedPrayers.length}</strong></div>
         </div>
 
-        <button 
+        <button
           className="danger-btn"
           onClick={handleResetProgress}
         >

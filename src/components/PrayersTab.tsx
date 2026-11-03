@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ChevronDown, ChevronUp, Check, BookOpen } from 'lucide-react';
 import { ALL_PRAYERS_DATA } from '../data/prayersData';
 
@@ -6,17 +6,49 @@ interface PrayersTabProps {
   fontSize: number;
   completedPrayers: string[];
   onToggleCompletePrayer: (prayerId: string) => void;
+  targetPrayerId?: string | null;
+  onClearTargetPrayer?: () => void;
 }
 
 export const PrayersTab: React.FC<PrayersTabProps> = ({
   fontSize,
   completedPrayers,
-  onToggleCompletePrayer
+  onToggleCompletePrayer,
+  targetPrayerId,
+  onClearTargetPrayer
 }) => {
-  const [expandedId, setExpandedId] = useState<string | null>('akt-ofiarowania');
+  const [expandedId, setExpandedId] = useState<string | null>(targetPrayerId || 'akt-ofiarowania');
+
+  useEffect(() => {
+    if (targetPrayerId) {
+      setExpandedId(targetPrayerId);
+      setTimeout(() => {
+        const el = document.getElementById(`prayer-card-${targetPrayerId}`);
+        if (el) {
+          const yOffset = -70;
+          const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
+          window.scrollTo({ top: Math.max(0, y), behavior: 'smooth' });
+        }
+      }, 60);
+      onClearTargetPrayer?.();
+    }
+  }, [targetPrayerId]);
 
   const toggleExpand = (id: string) => {
-    setExpandedId(prev => prev === id ? null : id);
+    setExpandedId(prev => {
+      const next = prev === id ? null : id;
+      if (next !== null) {
+        setTimeout(() => {
+          const el = document.getElementById(`prayer-card-${id}`);
+          if (el) {
+            const yOffset = -70;
+            const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
+            window.scrollTo({ top: Math.max(0, y), behavior: 'smooth' });
+          }
+        }, 60);
+      }
+      return next;
+    });
   };
 
   return (
@@ -37,7 +69,7 @@ export const PrayersTab: React.FC<PrayersTabProps> = ({
           Skarbiec Modlitw Rekolekcyjnych
         </h2>
         <p style={{ fontSize: '0.84rem', color: 'var(--text-muted)' }}>
-          Wszystkie 11 modlitw z oficjalnego przygotowania (Warszawa 2026r.)
+          Wszystkie modlitwy z oficjalnego przygotowania (Warszawa 2026r.)
         </p>
       </div>
 
@@ -50,6 +82,7 @@ export const PrayersTab: React.FC<PrayersTabProps> = ({
           return (
             <section 
               key={prayer.id} 
+              id={`prayer-card-${prayer.id}`}
               className={`stage-block prayer-stage-block ${isExpanded ? 'expanded' : ''}`}
             >
               <div 

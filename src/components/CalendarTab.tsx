@@ -20,8 +20,21 @@ export const CalendarTab: React.FC<CalendarTabProps> = ({
   // 'wstep' | 'skroty' | stageId (0, 1, 2, 3) | null
   const [expandedSection, setExpandedSection] = useState<string | number | null>(null);
 
-  const toggleSection = (section: string | number) => {
-    setExpandedSection(prev => prev === section ? null : section);
+  const toggleSection = (section: string | number, elementId?: string) => {
+    setExpandedSection(prev => {
+      const next = prev === section ? null : section;
+      if (next !== null && elementId) {
+        setTimeout(() => {
+          const el = document.getElementById(elementId);
+          if (el) {
+            const yOffset = -70;
+            const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
+            window.scrollTo({ top: Math.max(0, y), behavior: 'smooth' });
+          }
+        }, 60);
+      }
+      return next;
+    });
   };
 
   const completedCount = completedDays.filter(d => d >= 1 && d <= 33).length;
@@ -37,7 +50,7 @@ export const CalendarTab: React.FC<CalendarTabProps> = ({
 
   return (
     <div className="main-view" style={{ '--reader-font-size': `${fontSize}px` } as React.CSSProperties}>
-      
+
       {/* Karta postępu rekolekcji */}
       <section className="progress-summary-card">
         <h3 className="progress-title">Postęp Rekolekcji 33 Dni</h3>
@@ -50,10 +63,10 @@ export const CalendarTab: React.FC<CalendarTabProps> = ({
       </section>
 
       {/* Wstęp do rekolekcji i przypisy książki */}
-      <section className="stage-block" style={{ marginBottom: '16px' }}>
-        <div 
-          className="stage-header" 
-          onClick={() => toggleSection('wstep')}
+      <section id="section-wstep" className="stage-block" style={{ marginBottom: '16px' }}>
+        <div
+          className="stage-header"
+          onClick={() => toggleSection('wstep', 'section-wstep')}
           style={{ cursor: 'pointer', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
         >
           <div>
@@ -74,9 +87,9 @@ export const CalendarTab: React.FC<CalendarTabProps> = ({
               «Wezwanie <strong>„Królowa Serc”</strong>, tak drogie Montfortowi, wyraźnie ukazuje dobrowolny charakter, wolność będącą owocem miłości, w relacji, jaka powstaje pomiędzy Maryją, a osobą poświęcającą się Jej Synowi za Jej pośrednictwem.»
             </blockquote>
             {WSTEP_DATA.paragraphs.map((p, idx) => (
-              <p 
-                key={idx} 
-                className="reflection-paragraph" 
+              <p
+                key={idx}
+                className="reflection-paragraph"
                 style={{ marginBottom: '12px' }}
                 dangerouslySetInnerHTML={{ __html: p }}
               />
@@ -93,11 +106,12 @@ export const CalendarTab: React.FC<CalendarTabProps> = ({
       {/* 4 Etapy rekolekcji */}
       {stagesWithDays.map((stage) => {
         const isExpanded = expandedSection === stage.id;
+        const stageDomId = `section-stage-${stage.id}`;
         return (
-          <section key={stage.id} className="stage-block">
-            <div 
+          <section key={stage.id} id={stageDomId} className="stage-block">
+            <div
               className="stage-header"
-              onClick={() => toggleSection(stage.id)}
+              onClick={() => toggleSection(stage.id, stageDomId)}
               style={{ cursor: 'pointer' }}
             >
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
@@ -122,8 +136,8 @@ export const CalendarTab: React.FC<CalendarTabProps> = ({
                   Wskazania św. Ludwika Marii de Montfort dla tego etapu:
                 </div>
                 {stage.description.map((p, idx) => (
-                  <p 
-                    key={idx} 
+                  <p
+                    key={idx}
                     style={{ fontSize: 'calc(var(--reader-font-size) * 0.9)', lineHeight: 1.65, marginBottom: '10px', color: 'var(--text-main)', fontFamily: 'var(--font-serif)' }}
                     dangerouslySetInnerHTML={{ __html: p }}
                   />
@@ -135,7 +149,7 @@ export const CalendarTab: React.FC<CalendarTabProps> = ({
                 )}
                 {stage.additionalReading && (
                   <div style={{ marginTop: '10px', padding: '10px 14px', borderRadius: '4px', backgroundColor: 'var(--bg-primary)', border: '1px solid var(--border-card)', fontSize: 'calc(var(--reader-font-size) * 0.84)', color: 'var(--text-main)' }}>
-                    📖 <strong>Lektura duchowa:</strong> {stage.additionalReading}
+                    <strong>Lektura duchowa:</strong> {stage.additionalReading}
                   </div>
                 )}
               </div>
@@ -148,7 +162,7 @@ export const CalendarTab: React.FC<CalendarTabProps> = ({
                 const isCurrent = item.day === currentActiveDayNum;
 
                 return (
-                  <div 
+                  <div
                     key={item.day}
                     className={`day-row-item ${isCurrent ? 'current' : ''} ${isCompleted ? 'completed' : ''}`}
                     onClick={() => onSelectDay(item.day)}
@@ -188,7 +202,7 @@ export const CalendarTab: React.FC<CalendarTabProps> = ({
 
       {/* Dzień 34: Uroczysty Akt Ofiarowania (8 grudnia) */}
       <section className="stage-block consecration-block">
-        <div 
+        <div
           className={`day-row-item consecration-row ${currentActiveDayNum === 34 ? 'current' : ''} ${completedDays.includes(34) ? 'completed' : ''}`}
           onClick={() => onSelectDay(34)}
           role="button"
@@ -219,10 +233,10 @@ export const CalendarTab: React.FC<CalendarTabProps> = ({
       </section>
 
       {/* Wykaz skrótów i bibliografia */}
-      <section className="stage-block" style={{ marginTop: '16px' }}>
-        <div 
+      <section id="section-skroty" className="stage-block" style={{ marginTop: '16px' }}>
+        <div
           className="stage-header"
-          onClick={() => toggleSection('skroty')}
+          onClick={() => toggleSection('skroty', 'section-skroty')}
           style={{ cursor: 'pointer', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
         >
           <div>
