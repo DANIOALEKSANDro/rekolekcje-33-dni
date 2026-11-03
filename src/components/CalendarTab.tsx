@@ -17,9 +17,12 @@ export const CalendarTab: React.FC<CalendarTabProps> = ({
   currentActiveDayNum,
   fontSize
 }) => {
-  const [showWstep, setShowWstep] = useState(false);
-  const [showSkroty, setShowSkroty] = useState(false);
-  const [expandedStageId, setExpandedStageId] = useState<number | null>(null);
+  // 'wstep' | 'skroty' | stageId (0, 1, 2, 3) | null
+  const [expandedSection, setExpandedSection] = useState<string | number | null>(null);
+
+  const toggleSection = (section: string | number) => {
+    setExpandedSection(prev => prev === section ? null : section);
+  };
 
   const completedCount = completedDays.filter(d => d >= 1 && d <= 33).length;
   const percentage = Math.round((completedCount / 33) * 100);
@@ -50,7 +53,7 @@ export const CalendarTab: React.FC<CalendarTabProps> = ({
       <section className="stage-block" style={{ marginBottom: '16px' }}>
         <div 
           className="stage-header" 
-          onClick={() => setShowWstep(!showWstep)}
+          onClick={() => toggleSection('wstep')}
           style={{ cursor: 'pointer', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
         >
           <div>
@@ -61,11 +64,11 @@ export const CalendarTab: React.FC<CalendarTabProps> = ({
             <div className="stage-subtitle">{WSTEP_DATA.subtitle} • O nabożeństwie św. Ludwika</div>
           </div>
           <button className="top-btn" aria-label="Rozwiń wstęp">
-            {showWstep ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+            {expandedSection === 'wstep' ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
           </button>
         </div>
 
-        {showWstep && (
+        {expandedSection === 'wstep' && (
           <div style={{ padding: '16px', borderTop: '1px solid var(--border-card)' }}>
             <blockquote className="scripture-text" style={{ fontStyle: 'italic', marginBottom: '16px' }}>
               «{WSTEP_DATA.motto}»
@@ -86,12 +89,12 @@ export const CalendarTab: React.FC<CalendarTabProps> = ({
 
       {/* 4 Etapy rekolekcji */}
       {stagesWithDays.map((stage) => {
-        const isExpanded = expandedStageId === stage.id;
+        const isExpanded = expandedSection === stage.id;
         return (
           <section key={stage.id} className="stage-block">
             <div 
               className="stage-header"
-              onClick={() => setExpandedStageId(isExpanded ? null : stage.id)}
+              onClick={() => toggleSection(stage.id)}
               style={{ cursor: 'pointer' }}
             >
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
@@ -214,7 +217,7 @@ export const CalendarTab: React.FC<CalendarTabProps> = ({
       <section className="stage-block" style={{ marginTop: '16px' }}>
         <div 
           className="stage-header"
-          onClick={() => setShowSkroty(!showSkroty)}
+          onClick={() => toggleSection('skroty')}
           style={{ cursor: 'pointer', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
         >
           <div>
@@ -222,11 +225,11 @@ export const CalendarTab: React.FC<CalendarTabProps> = ({
             <div className="stage-subtitle">Oznaczenia dzieł św. Ludwika Marii de Montfort</div>
           </div>
           <button className="top-btn" aria-label="Rozwiń skróty">
-            {showSkroty ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+            {expandedSection === 'skroty' ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
           </button>
         </div>
 
-        {showSkroty && (
+        {expandedSection === 'skroty' && (
           <div style={{ padding: '14px 16px', borderTop: '1px solid var(--border-card)', fontSize: '0.84rem' }}>
             <div style={{ fontWeight: 600, color: 'var(--text-gold)', marginBottom: '8px' }}>
               Skróty dzieł cytowanych w rozważaniach:
