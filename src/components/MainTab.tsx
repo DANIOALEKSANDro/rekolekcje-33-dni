@@ -38,11 +38,11 @@ export const MainTab: React.FC<MainTabProps> = ({
   return (
     <div className="main-view" style={{ '--reader-font-size': `${fontSize}px` } as React.CSSProperties}>
 
-      {/* Karta z wizerunkiem Matki Bożej Ostrobramskiej */}
+      {/* Karta z wizerunkiem: Maryja na tronie */}
       <div className="sacred-image-card">
         <img
-          src="/1.jpg"
-          alt="Matka Boża Ostrobramska – Matka Miłosierdzia"
+          src="/maryja-na-tronie.jpg"
+          alt="Maryja na tronie – Matka Miłosierdzia"
           className="sacred-image-thumb"
         />
         <div className="sacred-image-info">
