@@ -8,8 +8,6 @@ interface SettingsTabProps {
   setTheme: (theme: string) => void;
   completedDays: number[];
   setCompletedDays: React.Dispatch<React.SetStateAction<number[]>>;
-  completedPrayers: string[];
-  setCompletedPrayers: React.Dispatch<React.SetStateAction<string[]>>;
   currentActiveDayNum: number;
   setCurrentActiveDayNum: (day: number) => void;
 }
@@ -21,15 +19,12 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
   setTheme,
   completedDays,
   setCompletedDays,
-  completedPrayers,
-  setCompletedPrayers,
   currentActiveDayNum,
   setCurrentActiveDayNum
 }) => {
   const handleResetProgress = () => {
-    if (window.confirm('Czy na pewno chcesz zresetować wszystkie zapisane postępy modlitw?')) {
+    if (window.confirm('Czy na pewno chcesz zresetować wszystkie zapisane postępy dni rekolekcji?')) {
       setCompletedDays([]);
-      setCompletedPrayers([]);
       localStorage.removeItem('rekolekcje_completed_days');
       localStorage.removeItem('rekolekcje_completed_prayers');
       alert('Postępy zostały zresetowane.');
@@ -201,13 +196,12 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
           <span>Pamięć aplikacji (Cache / LocalStorage)</span>
         </h3>
         <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)', marginBottom: '12px', lineHeight: 1.5 }}>
-          Wszystkie Twoje oznaczone dni i modlitwy są bezpiecznie zapisywane w pamięci tej przeglądarki na telefonie.
+          Wszystkie Twoje oznaczone dni rekolekcji są bezpiecznie zapisywane w pamięci tej przeglądarki na telefonie.
           Nie potrzebujesz logowania ani konta internetowego.
         </p>
 
         <div style={{ backgroundColor: 'var(--bg-card-subtle)', padding: '10px 14px', borderRadius: '6px', fontSize: '0.84rem', marginBottom: '14px' }}>
-          <div>Odmówione dni: <strong>{completedDays.length} z 33</strong></div>
-          <div>Odmówione modlitwy ze skarbca: <strong>{completedPrayers.length}</strong></div>
+          <div>Ukończone dni rekolekcji: <strong>{completedDays.length} z 33</strong></div>
         </div>
 
         <button

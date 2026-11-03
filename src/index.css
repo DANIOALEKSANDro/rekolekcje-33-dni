@@ -931,6 +931,19 @@ button {
   flex-shrink: 0;
 }
 
+.prayer-icon-circle {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid var(--border-card);
+  background-color: var(--bg-card-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-gold);
+  flex-shrink: 0;
+}
+
 .prayer-check-circle {
   width: 32px;
   height: 32px;

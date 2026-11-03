@@ -20,16 +20,6 @@ export const App: React.FC = () => {
     }
   });
 
-  // Completed Marian prayers from treasury (stored in localStorage cache)
-  const [completedPrayers, setCompletedPrayers] = useState<string[]>(() => {
-    try {
-      const saved = localStorage.getItem('rekolekcje_completed_prayers');
-      return saved ? JSON.parse(saved) : [];
-    } catch {
-      return [];
-    }
-  });
-
   // Font size: default 20px (large, senior-accessible)
   const [fontSize, setFontSize] = useState<number>(() => {
     try {
@@ -86,14 +76,6 @@ export const App: React.FC = () => {
 
   useEffect(() => {
     try {
-      localStorage.setItem('rekolekcje_completed_prayers', JSON.stringify(completedPrayers));
-    } catch (e) {
-      console.error(e);
-    }
-  }, [completedPrayers]);
-
-  useEffect(() => {
-    try {
       localStorage.setItem('rekolekcje_font_size', String(fontSize));
     } catch (e) {
       console.error(e);
@@ -139,13 +121,6 @@ export const App: React.FC = () => {
   const toggleCompleteDay = (day: number) => {
     setCompletedDays(prev => 
       prev.includes(day) ? prev.filter(d => d !== day) : [...prev, day]
-    );
-  };
-
-  // Toggle completed status for a prayer from treasury
-  const toggleCompletePrayer = (prayerId: string) => {
-    setCompletedPrayers(prev => 
-      prev.includes(prayerId) ? prev.filter(p => p !== prayerId) : [...prev, prayerId]
     );
   };
 
@@ -233,8 +208,6 @@ export const App: React.FC = () => {
         {activeTab === 'prayers' && (
           <PrayersTab
             fontSize={fontSize}
-            completedPrayers={completedPrayers}
-            onToggleCompletePrayer={toggleCompletePrayer}
             targetPrayerId={targetPrayerId}
             onClearTargetPrayer={() => setTargetPrayerId(null)}
           />
@@ -248,8 +221,6 @@ export const App: React.FC = () => {
             setTheme={setTheme}
             completedDays={completedDays}
             setCompletedDays={setCompletedDays}
-            completedPrayers={completedPrayers}
-            setCompletedPrayers={setCompletedPrayers}
             currentActiveDayNum={currentActiveDayNum}
             setCurrentActiveDayNum={setCurrentActiveDayNum}
           />
