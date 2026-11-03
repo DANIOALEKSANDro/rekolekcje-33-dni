@@ -149,7 +149,7 @@ button {
 }
 
 .brand-subtitle {
-  font-size: 0.76rem;
+  font-size: 0.84rem;
   color: var(--text-muted);
 }
 
@@ -205,13 +205,13 @@ button {
   flex-direction: column;
   align-items: center;
   gap: 3px;
-  padding: 6px 14px;
+  padding: 6px 8px;
   border-radius: 8px;
   color: var(--text-muted);
-  font-size: 0.78rem;
+  font-size: 0.84rem;
   font-weight: 600;
   transition: all 0.15s ease;
-  min-width: 68px;
+  min-width: 64px;
 }
 
 .tab-btn.active {
@@ -275,7 +275,7 @@ button {
 }
 
 .day-badge-date {
-  font-size: clamp(0.72rem, 2.8vw, 0.8rem);
+  font-size: clamp(0.78rem, 3vw, 0.88rem);
   color: var(--text-muted);
   margin-top: 2px;
   white-space: nowrap;
@@ -293,7 +293,7 @@ button {
   border: 1px solid var(--border-card);
   background-color: var(--bg-card-subtle);
   color: var(--text-main);
-  font-size: 0.82rem;
+  font-size: 0.86rem;
   font-weight: 600;
   flex-shrink: 0;
   white-space: nowrap;
@@ -306,9 +306,9 @@ button {
 
 /* Tytuł i temat rozważania */
 .reading-theme {
-  font-size: 0.82rem;
+  font-size: 0.86rem;
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 0.8px;
   color: var(--text-gold);
   font-weight: 700;
   margin-bottom: 6px;
@@ -442,7 +442,7 @@ button {
 }
 
 .aspiration-label {
-  font-size: 0.75rem;
+  font-size: 0.82rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.8px;
@@ -490,7 +490,7 @@ button {
 }
 
 .mark-done-hint {
-  font-size: 0.78rem;
+  font-size: 0.85rem;
   color: var(--text-muted);
   text-align: center;
   margin-top: 8px;
@@ -554,7 +554,7 @@ button {
 }
 
 .sacred-image-info p {
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   color: var(--text-muted);
   line-height: 1.4;
 }
@@ -759,7 +759,7 @@ button {
   background-color: var(--color-primary-bg);
   border: 1px solid var(--border-gold);
   color: var(--text-gold);
-  font-size: 0.82rem;
+  font-size: 0.86rem;
   font-weight: 600;
   margin-top: 6px;
   line-height: 1.4;
@@ -950,7 +950,7 @@ button {
 }
 
 .prayer-stage-author {
-  font-size: calc(var(--reader-font-size) * 0.76);
+  font-size: max(0.85rem, calc(var(--reader-font-size) * 0.78));
 }
 
 .prayer-stage-right {
@@ -1121,7 +1121,7 @@ button {
   }
   .step-btn {
     padding: 6px 8px;
-    font-size: 0.78rem;
+    font-size: 0.82rem;
     gap: 3px;
   }
 }

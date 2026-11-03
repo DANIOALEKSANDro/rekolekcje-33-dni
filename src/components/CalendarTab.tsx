@@ -249,7 +249,7 @@ export const CalendarTab: React.FC<CalendarTabProps> = ({
         </div>
 
         {expandedSection === 'skroty' && (
-          <div style={{ padding: '14px 16px', borderTop: '1px solid var(--border-card)', fontSize: '0.84rem' }}>
+          <div style={{ padding: '14px 16px', borderTop: '1px solid var(--border-card)', fontSize: '0.88rem' }}>
             <div style={{ fontWeight: 600, color: 'var(--text-gold)', marginBottom: '8px' }}>
               Skróty dzieł cytowanych w rozważaniach:
             </div>

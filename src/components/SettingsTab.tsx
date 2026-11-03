@@ -38,7 +38,7 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
         <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.25rem', color: 'var(--text-gold)' }}>
           Ustawienia i Dostępność
         </h2>
-        <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)' }}>
+        <p style={{ fontSize: '0.88rem', color: 'var(--text-muted)' }}>
           Dostosuj aplikację do swoich oczu i potrzeb
         </p>
       </div>
@@ -49,7 +49,7 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
           <Type size={18} />
           <span>Wielkość liter (Czytelność)</span>
         </h3>
-        <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)', marginBottom: '12px' }}>
+        <p style={{ fontSize: '0.88rem', color: 'var(--text-muted)', marginBottom: '12px' }}>
           Wybierz rozmiar tekstu. Zmiana powiększy wszystkie czytania i modlitwy:
         </p>
 
@@ -66,14 +66,14 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
               onClick={() => setFontSize(opt.size)}
             >
               <div>{opt.label}</div>
-              <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>{opt.size}px</div>
+              <div style={{ fontSize: '0.80rem', color: 'var(--text-muted)', marginTop: '2px' }}>{opt.size}px</div>
             </button>
           ))}
         </div>
 
         {/* Podgląd czcionki */}
         <div style={{ padding: '12px 14px', borderRadius: '6px', backgroundColor: 'var(--bg-card-subtle)', border: '1px dashed var(--border-card)' }}>
-          <div style={{ fontSize: '0.72rem', textTransform: 'uppercase', color: 'var(--text-gold)', fontWeight: 700 }}>
+          <div style={{ fontSize: '0.80rem', textTransform: 'uppercase', color: 'var(--text-gold)', fontWeight: 700 }}>
             Podgląd tekstu:
           </div>
           <p style={{ fontFamily: 'var(--font-serif)', fontSize: `${fontSize}px`, lineHeight: 1.6, marginTop: '6px' }}>
@@ -96,7 +96,7 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
           >
             <Sun size={18} style={{ margin: '0 auto 4px auto' }} />
             <div>Pergamin</div>
-            <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>Ciepły, papierowy</div>
+            <div style={{ fontSize: '0.80rem', color: 'var(--text-muted)', marginTop: '2px' }}>Ciepły, papierowy</div>
           </button>
 
           <button
@@ -105,7 +105,7 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
           >
             <Moon size={18} style={{ margin: '0 auto 4px auto' }} />
             <div>Nocny</div>
-            <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>Ciemny, spokojny</div>
+            <div style={{ fontSize: '0.80rem', color: 'var(--text-muted)', marginTop: '2px' }}>Ciemny, spokojny</div>
           </button>
 
           <button
@@ -114,7 +114,7 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
           >
             <Contrast size={18} style={{ margin: '0 auto 4px auto' }} />
             <div>Kontrast</div>
-            <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>Czerń na bieli</div>
+            <div style={{ fontSize: '0.80rem', color: 'var(--text-muted)', marginTop: '2px' }}>Czerń na bieli</div>
           </button>
         </div>
       </section>
@@ -125,7 +125,7 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
           <Calendar size={18} />
           <span>Aktualny dzień rekolekcji</span>
         </h3>
-        <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)', marginBottom: '12px' }}>
+        <p style={{ fontSize: '0.88rem', color: 'var(--text-muted)', marginBottom: '12px' }}>
           Obecnie czytasz: <strong>Dzień {currentActiveDayNum === 34 ? '34 (Akt Oddania)' : currentActiveDayNum}</strong>.
           Możesz szybko przejść do dowolnego dnia:
         </p>
@@ -144,7 +144,7 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
               backgroundColor: 'var(--bg-card-subtle)',
               color: 'var(--text-main)',
               fontFamily: 'inherit',
-              fontSize: '0.9rem',
+              fontSize: '0.92rem',
               cursor: 'pointer',
               whiteSpace: 'normal',
               textOverflow: 'ellipsis'
@@ -163,7 +163,7 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
 
         <button
           className="top-btn"
-          style={{ width: '100%', marginTop: '8px', fontSize: '0.84rem', height: 'auto', padding: '10px 12px' }}
+          style={{ width: '100%', marginTop: '8px', fontSize: '0.88rem', height: 'auto', padding: '10px 12px' }}
           onClick={() => {
             const now = new Date();
             const year = now.getFullYear();
@@ -195,12 +195,12 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
           <Database size={18} />
           <span>Pamięć aplikacji (Cache / LocalStorage)</span>
         </h3>
-        <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)', marginBottom: '12px', lineHeight: 1.5 }}>
+        <p style={{ fontSize: '0.88rem', color: 'var(--text-muted)', marginBottom: '12px', lineHeight: 1.5 }}>
           Wszystkie Twoje oznaczone dni rekolekcji są bezpiecznie zapisywane w pamięci tej przeglądarki na telefonie.
           Nie potrzebujesz logowania ani konta internetowego.
         </p>
 
-        <div style={{ backgroundColor: 'var(--bg-card-subtle)', padding: '10px 14px', borderRadius: '6px', fontSize: '0.84rem', marginBottom: '14px' }}>
+        <div style={{ backgroundColor: 'var(--bg-card-subtle)', padding: '10px 14px', borderRadius: '6px', fontSize: '0.88rem', marginBottom: '14px' }}>
           <div>Ukończone dni rekolekcji: <strong>{completedDays.length} z 33</strong></div>
         </div>
 

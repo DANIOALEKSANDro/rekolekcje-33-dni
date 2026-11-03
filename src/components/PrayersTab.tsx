@@ -64,7 +64,7 @@ export const PrayersTab: React.FC<PrayersTabProps> = ({
         <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.3rem', color: 'var(--text-gold)', marginBottom: '4px' }}>
           Skarbiec Modlitw Rekolekcyjnych
         </h2>
-        <p style={{ fontSize: '0.84rem', color: 'var(--text-muted)' }}>
+        <p style={{ fontSize: '0.88rem', color: 'var(--text-muted)' }}>
           Wszystkie modlitwy z oficjalnego przygotowania (Warszawa 2026r.)
         </p>
       </div>
