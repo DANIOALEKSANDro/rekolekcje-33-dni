@@ -1,5 +1,5 @@
 import React from 'react';
-import { Type, Moon, Sun, Contrast, RotateCcw, Database, Calendar, Smartphone, Download } from 'lucide-react';
+import { Type, Moon, Sun, Contrast, RotateCcw, Database, Calendar, Smartphone, Download, Monitor } from 'lucide-react';
 
 interface SettingsTabProps {
   fontSize: number;
@@ -189,38 +189,50 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
         </button>
       </section>
 
-      {/* 4. Instalacja na telefonie (PWA) */}
-      <section className="settings-section">
-        <h3 className="settings-heading">
-          <Smartphone size={18} />
-          <span>Aplikacja na telefon (PWA)</span>
-        </h3>
-        <p style={{ fontSize: '0.88rem', color: 'var(--text-muted)', marginBottom: '12px', lineHeight: 1.5 }}>
-          Możesz dodać aplikację do ekranu głównego telefonu (iPhone lub Android). Działa jak tradycyjna aplikacja z App Store / Google Play, bez paska adresu i z pełnym dostępem offline.
-        </p>
+      {/* 4. Instalacja aplikacji (PWA) */}
+      {(() => {
+        const userAgent = typeof window !== 'undefined' ? (window.navigator.userAgent || '') : '';
+        const isIOS = /iphone|ipad|ipod/i.test(userAgent) || 
+          (typeof navigator !== 'undefined' && navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+        const isAndroid = /android/i.test(userAgent);
+        const isDesktop = !isIOS && !isAndroid && !/mobi|tablet/i.test(userAgent);
 
-        <button
-          className="top-btn"
-          style={{ 
-            width: '100%', 
-            height: 'auto', 
-            padding: '12px 14px', 
-            fontSize: '0.9rem', 
-            fontWeight: 700, 
-            gap: '8px', 
-            color: 'var(--text-gold)', 
-            borderColor: 'var(--border-gold)',
-            backgroundColor: 'var(--color-primary-bg)'
-          }}
-          onClick={() => {
-            localStorage.removeItem('rekolekcje_install_banner_dismissed');
-            window.dispatchEvent(new CustomEvent('open-pwa-install'));
-          }}
-        >
-          <Download size={18} />
-          <span>Zainstaluj lub zobacz instrukcję (Android / iPhone)</span>
-        </button>
-      </section>
+        return (
+          <section className="settings-section">
+            <h3 className="settings-heading">
+              {isDesktop ? <Monitor size={18} /> : <Smartphone size={18} />}
+              <span>{isDesktop ? 'Aplikacja na pulpit / komputer (PWA)' : 'Aplikacja na telefon (PWA)'}</span>
+            </h3>
+            <p style={{ fontSize: '0.88rem', color: 'var(--text-muted)', marginBottom: '12px', lineHeight: 1.5 }}>
+              {isDesktop
+                ? 'Możesz pobrać i zainstalować aplikację bezpośrednio na swoim komputerze (Windows, Mac, Linux). Będziesz mieć do niej dostęp jak do programu ze skrótu na pulpicie i w menu Start, bez paska przeglądarki i z pełnym trybem offline.'
+                : 'Możesz dodać aplikację do ekranu głównego telefonu (iPhone lub Android). Działa jak tradycyjna aplikacja z App Store / Google Play, bez paska adresu i z pełnym dostępem offline.'}
+            </p>
+
+            <button
+              className="top-btn"
+              style={{ 
+                width: '100%', 
+                height: 'auto', 
+                padding: '12px 14px', 
+                fontSize: '0.9rem', 
+                fontWeight: 700, 
+                gap: '8px', 
+                color: 'var(--text-gold)', 
+                borderColor: 'var(--border-gold)',
+                backgroundColor: 'var(--color-primary-bg)'
+              }}
+              onClick={() => {
+                localStorage.removeItem('rekolekcje_install_banner_dismissed');
+                window.dispatchEvent(new CustomEvent('open-pwa-install'));
+              }}
+            >
+              {isDesktop ? <Monitor size={18} /> : <Download size={18} />}
+              <span>{isDesktop ? 'Zainstaluj na pulpicie (Brave / Chrome)' : 'Zainstaluj lub zobacz instrukcję (Android / iPhone)'}</span>
+            </button>
+          </section>
+        );
+      })()}
 
       {/* 5. Pamięć i postępy (Cache storage) */}
       <section className="settings-section">

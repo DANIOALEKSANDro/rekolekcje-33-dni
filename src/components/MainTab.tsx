@@ -114,29 +114,34 @@ export const MainTab: React.FC<MainTabProps> = ({
           {currentDay.title}
         </h2>
 
+        {/* Ramka Ewangelii */}
+        {currentDay.gospelSig && currentDay.gospelText && (
+          <div className="scripture-box">
+            <div className="scripture-ref">
+              <BookOpen size={15} style={{ display: 'inline', verticalAlign: 'text-bottom', marginRight: '6px' }} />
+              Ewangelia: <strong>{currentDay.gospelSig}</strong>
+            </div>
+            <div className="scripture-text">
+              {currentDay.gospelText.split('\n\n').map((gPara, gIdx, arr) => (
+                <p
+                  key={gIdx}
+                  style={{ margin: 0, marginBottom: gIdx === arr.length - 1 ? 0 : '10px' }}
+                  dangerouslySetInnerHTML={{ __html: gPara }}
+                />
+              ))}
+            </div>
+          </div>
+        )}
+
         {/* Treść czytania i rozważania z Traktatu św. Ludwika Marii de Montfort */}
         <section className="reflection-section" aria-label="Czytanie i rozważanie">
-          {currentDay.paragraphs.map((para, idx) => {
-            const isGospel = idx === 0 && Boolean(currentDay.gospelSig);
-            if (isGospel) {
-              return (
-                <div key={idx} className="scripture-box">
-                  <div className="scripture-ref">
-                    <BookOpen size={15} style={{ display: 'inline', verticalAlign: 'text-bottom', marginRight: '6px' }} />
-                    Ewangelia: <strong>{currentDay.gospelSig}</strong>
-                  </div>
-                  <p className="scripture-text" dangerouslySetInnerHTML={{ __html: para }} />
-                </div>
-              );
-            }
-            return (
-              <p
-                key={idx}
-                className="reflection-paragraph"
-                dangerouslySetInnerHTML={{ __html: para }}
-              />
-            );
-          })}
+          {currentDay.paragraphs.map((para, idx) => (
+            <p
+              key={idx}
+              className="reflection-paragraph"
+              dangerouslySetInnerHTML={{ __html: para }}
+            />
+          ))}
         </section>
 
         {/* Punkty do rachunku sumienia / pytania do refleksji */}

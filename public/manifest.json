@@ -1,6 +1,8 @@
 {
   "short_name": "Rekolekcje z Maryją",
   "name": "Rekolekcje z Maryją",
+  "description": "33-dniowe przygotowanie do Aktu Ofiarowania się Jezusowi przez Maryję",
+  "categories": ["lifestyle", "books"],
   "icons": [
     {
       "src": "/app-icon.png",
@@ -25,5 +27,5 @@
   "background_color": "#0d1424",
   "theme_color": "#121b2d",
   "display": "standalone",
-  "orientation": "portrait"
+  "orientation": "any"
 }

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Download, Share, PlusSquare, X, Check, ExternalLink, Globe, MoreHorizontal, MoreVertical } from 'lucide-react';
+import { Download, Share, PlusSquare, X, Check, ExternalLink, Globe, MoreHorizontal, MoreVertical, Monitor } from 'lucide-react';
 
 interface PWAInstallBannerProps {
   onOpenIOSGuide?: () => void;
@@ -9,11 +9,13 @@ export const PWAInstallBanner: React.FC<PWAInstallBannerProps> = () => {
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
   const [isIOS, setIsIOS] = useState<boolean>(false);
   const [isAndroid, setIsAndroid] = useState<boolean>(false);
+  const [isDesktop, setIsDesktop] = useState<boolean>(false);
   const [isInAppBrowser, setIsInAppBrowser] = useState<boolean>(false);
   const [isStandalone, setIsStandalone] = useState<boolean>(false);
   const [bannerDismissed, setBannerDismissed] = useState<boolean>(true);
   const [showIOSModal, setShowIOSModal] = useState<boolean>(false);
   const [showAndroidModal, setShowAndroidModal] = useState<boolean>(false);
+  const [showDesktopModal, setShowDesktopModal] = useState<boolean>(false);
   const [showInAppModal, setShowInAppModal] = useState<boolean>(false);
 
   useEffect(() => {
@@ -25,7 +27,7 @@ export const PWAInstallBanner: React.FC<PWAInstallBannerProps> = () => {
 
     setIsStandalone(checkStandalone);
 
-    // 2. Wykryj system iOS (iPhone / iPad / iPod) oraz Android
+    // 2. Wykryj system iOS (iPhone / iPad / iPod), Android oraz Komputer (Desktop)
     const userAgent = window.navigator.userAgent || '';
     const isIOSDevice = /iphone|ipad|ipod/i.test(userAgent) || 
       (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
@@ -33,6 +35,9 @@ export const PWAInstallBanner: React.FC<PWAInstallBannerProps> = () => {
 
     const isAndroidDevice = /android/i.test(userAgent);
     setIsAndroid(isAndroidDevice);
+
+    const isDesktopDevice = !isIOSDevice && !isAndroidDevice && !/mobi|tablet/i.test(userAgent);
+    setIsDesktop(isDesktopDevice);
 
     // 3. Wykryj przeglądarkę wbudowaną w aplikację (In-App Browser: Messenger, Facebook, Instagram itp.)
     const inApp = /FBAN|FBAV|Messenger|Instagram|Line|Twitter|Snapchat|TikTok|MicroMessenger/i.test(userAgent);
@@ -47,7 +52,7 @@ export const PWAInstallBanner: React.FC<PWAInstallBannerProps> = () => {
       setBannerDismissed(false);
     }
 
-    // 5. Nasłuchuj natywnego zdarzenia beforeinstallprompt (Android / Chrome / Edge)
+    // 5. Nasłuchuj natywnego zdarzenia beforeinstallprompt (Chrome / Edge / Windows / Mac / Android)
     const handleBeforeInstallPrompt = (e: Event) => {
       e.preventDefault();
       setDeferredPrompt(e);
@@ -67,14 +72,30 @@ export const PWAInstallBanner: React.FC<PWAInstallBannerProps> = () => {
 
     window.addEventListener('appinstalled', handleAppInstalled);
 
-    // 7. Nasłuchuj ręcznego wywołania (np. z zakładki Ustawienia)
+    // 7. Sprawdź, czy aplikacja jest już zainstalowana w przeglądarce (Chrome/Brave/Edge)
+    if (typeof navigator !== 'undefined' && 'getInstalledRelatedApps' in navigator) {
+      (navigator as any).getInstalledRelatedApps().then((apps: any[]) => {
+        if (apps && apps.length > 0) {
+          setIsStandalone(true);
+          setBannerDismissed(true);
+        }
+      }).catch(() => {});
+    }
+
+    // 8. Nasłuchuj ręcznego wywołania (np. z zakładki Ustawienia)
     const handleOpenManual = () => {
       if (inApp) {
         setShowInAppModal(true);
       } else if (deferredPrompt) {
         deferredPrompt.prompt().then(() => {
           setDeferredPrompt(null);
-        }).catch(() => {});
+        }).catch(() => {
+          if (isDesktopDevice) setShowDesktopModal(true);
+          else if (isIOSDevice) setShowIOSModal(true);
+          else setShowAndroidModal(true);
+        });
+      } else if (isDesktopDevice) {
+        setShowDesktopModal(true);
       } else if (isIOSDevice) {
         setShowIOSModal(true);
       } else {
@@ -102,8 +123,8 @@ export const PWAInstallBanner: React.FC<PWAInstallBannerProps> = () => {
       return;
     }
 
+    // Jeśli przeglądarka wystawiła natywny monit instalacji (Chrome / Brave / Edge / Android)
     if (deferredPrompt) {
-      // Natywny prompt Chrome / Android
       try {
         deferredPrompt.prompt();
         const { outcome } = await deferredPrompt.userChoice;
@@ -113,10 +134,20 @@ export const PWAInstallBanner: React.FC<PWAInstallBannerProps> = () => {
         setDeferredPrompt(null);
       } catch (err) {
         console.error('Błąd wywołania instalacji:', err);
+        if (isDesktop) setShowDesktopModal(true);
+        else if (isIOS) setShowIOSModal(true);
+        else setShowAndroidModal(true);
       }
-    } else if (isIOS) {
+      return;
+    }
+
+    // Jeśli prompt nie jest dostępny
+    if (isIOS) {
       // Otwórz graficzny przewodnik dla iOS Safari
       setShowIOSModal(true);
+    } else if (isDesktop) {
+      // Otwórz instrukcję dodania ikony na pulpit w Brave / Chrome / Edge
+      setShowDesktopModal(true);
     } else {
       // Otwórz instrukcję ogólną dla Androida / innych przeglądarek
       setShowAndroidModal(true);
@@ -124,7 +155,7 @@ export const PWAInstallBanner: React.FC<PWAInstallBannerProps> = () => {
   };
 
   // Jeśli aplikacja jest już zainstalowana i żaden modal nie jest otwarty
-  if (isStandalone && !showIOSModal && !showAndroidModal && !showInAppModal) {
+  if (isStandalone && !showIOSModal && !showAndroidModal && !showDesktopModal && !showInAppModal) {
     return null;
   }
 
@@ -148,12 +179,14 @@ export const PWAInstallBanner: React.FC<PWAInstallBannerProps> = () => {
               <strong className="pwa-banner-title">
                 {isInAppBrowser 
                   ? (isIOS ? 'Otwórz w Safari' : 'Otwórz w Chrome')
-                  : 'Zainstaluj na telefonie'}
+                  : (isDesktop ? 'Zainstaluj na pulpicie' : 'Zainstaluj na telefonie')}
               </strong>
               <span className="pwa-banner-desc">
                 {isInAppBrowser
                   ? 'Messenger blokuje instalację. Dotknij, aby zobaczyć jak.'
-                  : (isIOS ? 'Dodaj do ekranu głównego iPhone’a' : 'Szybki dostęp i czytanie offline')}
+                  : (isDesktop
+                      ? 'Utwórz ikonę programu na pulpicie komputera'
+                      : (isIOS ? 'Dodaj do ekranu głównego iPhone’a' : 'Szybki dostęp i czytanie offline'))}
               </span>
             </div>
           </div>
@@ -162,9 +195,15 @@ export const PWAInstallBanner: React.FC<PWAInstallBannerProps> = () => {
             <button 
               className="pwa-install-btn"
               onClick={handleInstallClick}
-              aria-label={isInAppBrowser ? "Otwórz w przeglądarce" : "Zainstaluj aplikację"}
+              aria-label={isInAppBrowser ? "Otwórz w przeglądarce" : (isDesktop ? "Zainstaluj na pulpicie" : "Zainstaluj aplikację")}
             >
-              {isInAppBrowser ? <ExternalLink size={16} /> : <Download size={16} />}
+              {isInAppBrowser ? (
+                <ExternalLink size={16} />
+              ) : isDesktop ? (
+                <Monitor size={16} />
+              ) : (
+                <Download size={16} />
+              )}
               <span>{isInAppBrowser ? 'Otwórz' : 'Zainstaluj'}</span>
             </button>
             <button 
@@ -411,6 +450,106 @@ export const PWAInstallBanner: React.FC<PWAInstallBannerProps> = () => {
 
             <div className="pwa-modal-footer">
               <button className="mark-done-btn" onClick={() => setShowAndroidModal(false)}>
+                Rozumiem
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* MODAL 3: Instrukcja dla Komputera (Windows, Mac, Linux) */}
+      {showDesktopModal && (
+        <div className="pwa-modal-backdrop" onClick={() => setShowDesktopModal(false)}>
+          <div className="pwa-modal-card" onClick={(e) => e.stopPropagation()} role="dialog" aria-modal="true">
+            <button className="pwa-modal-close" onClick={() => setShowDesktopModal(false)} aria-label="Zamknij">
+              <X size={20} />
+            </button>
+
+            <div className="pwa-modal-header">
+              <div style={{ 
+                width: 54, 
+                height: 54, 
+                borderRadius: '50%', 
+                backgroundColor: 'var(--color-primary-bg)', 
+                border: '1px solid var(--border-gold)', 
+                display: 'flex', 
+                alignItems: 'center', 
+                justifyContent: 'center', 
+                margin: '0 auto 10px auto', 
+                color: 'var(--text-gold)' 
+              }}>
+                <Monitor size={26} />
+              </div>
+              <h3>Zainstaluj aplikację na pulpicie</h3>
+              <p>Dodaj oficjalny skrót programu (Brave / Chrome / Edge)</p>
+            </div>
+
+            <div style={{ 
+              padding: '12px 14px', 
+              borderRadius: '8px', 
+              backgroundColor: 'var(--bg-card-subtle)', 
+              border: '1px dashed var(--border-gold)', 
+              fontSize: '0.86rem', 
+              color: 'var(--text-main)', 
+              marginBottom: '16px', 
+              lineHeight: 1.5 
+            }}>
+              Aplikacja instaluje się jako samodzielny program ze skrótem na pulpicie Windows i w menu Start. Otwiera się w dedykowanym, eleganckim oknie bez paska adresu przeglądarki i działa w pełni offline.
+            </div>
+
+            <div className="pwa-ios-steps">
+              <div className="pwa-step-item">
+                <div className="pwa-step-num">1</div>
+                <div className="pwa-step-body">
+                  <div className="pwa-step-title">
+                    Kliknij ikonę instalacji w pasku adresu
+                    <span className="pwa-ios-icon-badge" title="Pasek adresu">
+                      <Download size={18} />
+                    </span>
+                  </div>
+                  <p className="pwa-step-desc">
+                    W przeglądarce <strong>Brave, Chrome lub Edge</strong> po prawej stronie paska adresu (obok tarczy lub gwiazdki) kliknij ikonę <strong>komputerka ze strzałką</strong> lub <strong>„Zainstaluj aplikację”</strong>, a następnie kliknij <strong>„Zainstaluj”</strong>.
+                  </p>
+                </div>
+              </div>
+
+              <div className="pwa-step-item">
+                <div className="pwa-step-num">2</div>
+                <div className="pwa-step-body">
+                  <div className="pwa-step-title">
+                    Alternatywnie: Przez menu przeglądarki
+                    <span className="pwa-ios-icon-badge" title="Menu">
+                      <MoreVertical size={18} />
+                    </span>
+                  </div>
+                  <p className="pwa-step-desc">
+                    W prawym górnym rogu kliknij menu <strong>(≡ lub ⋮)</strong> i wybierz:
+                    <br />• <strong>Brave:</strong> <em>„Zainstaluj Rekolekcje z Maryją...”</em>
+                    <br />• <strong>Chrome:</strong> „Zapisz i udostępnij” ➔ <em>„Zainstaluj Rekolekcje z Maryją...”</em>
+                    <br />• <strong>Edge:</strong> „Aplikacje” ➔ <em>„Zainstaluj tę witrynę jako aplikację”</em>
+                  </p>
+                </div>
+              </div>
+
+              <div className="pwa-step-item">
+                <div className="pwa-step-num">3</div>
+                <div className="pwa-step-body">
+                  <div className="pwa-step-title">
+                    Skrót jest już na Twoim pulpicie?
+                  </div>
+                  <p className="pwa-step-desc">
+                    Jeśli skrót z Matką Bożą znajduje się już na pulpicie (jak na Twoim ekranie), aplikacja jest w 100% gotowa! Wystarczy go dwukrotnie kliknąć, aby uruchomić program.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="pwa-modal-footer">
+              <div className="pwa-modal-success-badge">
+                <Check size={16} />
+                <span>Skrót pojawi się na pulpicie i uruchomi aplikację w osobnym, wygodnym oknie</span>
+              </div>
+              <button className="mark-done-btn" onClick={() => setShowDesktopModal(false)}>
                 Rozumiem
               </button>
             </div>
